@@ -99,13 +99,13 @@ _________________________
 
 ## Getting an OAuth Token
 
-Go to [Google Cloud Consol](https://console.cloud.google.com/)s website and select the `APIs & Services` button.
+Go to [Google Cloud Consol's](https://console.cloud.google.com/) website and select the `APIs & Services` button.
 
 Navigate to the `credentials` tab and select the `+ CREATE CREDENTIALS` button to reveal a drop-down of 4 items. 
 
 Select the second item (`OAuth client ID`, sub-text: "Requests user consent so your app can access the user's data")
 
-This will bring you to the "Create OAuth client ID" page. **However**, in order to be able to continue you need to fill out the `OAuth consent screen` and pass the screening process. The step-by-step process is in the [OAuth consent screen](#OAuth-consent-screen) section.
+This will bring you to the "Create OAuth client ID" page. **However**, to be able to continue you need to fill out the `OAuth consent screen` and pass the screening process. The step-by-step process is in the [OAuth consent screen](#OAuth-consent-screen) section.
 
 Finally, click the application type dropdown, select `Desktop app`, and name it whatever you'd like.
 
@@ -135,7 +135,7 @@ ____________________________________________
 
 ## Edit app registration - OAuth consent screen
 
-Enter a name in the "App Name" text-entry box and enter your own email in the "User Support Email" text-entry box.
+Enter a name in the "App Name" text-entry box and enter your email in the "User Support Email" text-entry box.
 
 Scroll down to the "Developer contact information" section. 
 Enter your email again into the "Email Address" text-entry box with the subtext: "*These email addresses are for Google to notify you about any changes to your project.*"
