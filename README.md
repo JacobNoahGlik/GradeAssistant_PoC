@@ -65,21 +65,25 @@ _____________________________________________________
    1. You are required to pass an OAuth Consent Screen. (Walkthrough found [here](#OAuth-consent-screen))
 3. Update the AI token
    1. Go to [replicate's website](https://replicate.com/docs/get-started/python#authenticate) to create a free account (by linking your GitHub account). NOTE: you get 10 free API calls to the AI. You may wish to add a payment method. This will charge you approx $0.000021 per API call using the default settings. Feel free to set a monthly "Spend Limit" on [their billing page](https://replicate.com/account/billing). Supported models and pricing can be found on [their pricing page, in the language models section](https://replicate.com/pricing#language-models)
-   2. Model Options:
-      1. llama-2-13b
-      2. *llama-2-70b* (**default**)
-      3. llama-2-7b
-      4. meta-llama-3-70b
-      5. meta-llama-3-8b
-      6. mistral-7b-v0.1
+      1. Model Options:
+         1. llama-2-13b
+         2. *llama-2-70b* (**default**)
+         3. llama-2-7b
+         4. meta-llama-3-70b
+         5. meta-llama-3-8b
+         6. mistral-7b-v0.1
+   2. Once you have an API token from [replicate's token section on their website](https://replicate.com/account/api-tokens): copy the token and run the following in a Python-enabled terminal.
+      1. `python3 update.py`
+      2. `update_token`
+      3. `my_API_token` (make sure to replace `my_API_token` with the token from [replicate's token section on their website](https://replicate.com/account/api-tokens).
 4. Update the Google Form ID
-   1. Run the update script using the following code in a python-enabled terminal. 
+   1. Run the update script using the following code in a Python-enabled terminal. 
       1. `python3 update.py [OPTIONAL: Google_Form_URL]` (make sure to replace `[OPTIONAL: Google_Form_URL]` with the URL of your Google form **AND** *skip the 3rd step if you choose to do this*)
       2. `update_form`
       3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google form **ONLY IF** *you did not add the optional URL in the first step*)
          1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
 6. Update the Google Sheets ID
-   1. Run the update script using the following code in a python-enabled terminal. 
+   1. Run the update script using the following code in a Python-enabled terminal. 
       1. `python3 update.py [OPTIONAL: Google_Sheet_URL]` (make sure to replace `[OPTIONAL: Google_Sheet_URL]` with the URL of your Google sheet **AND** *skip the 3rd step if you choose to do this*)
       2. `update_spreadsheet`
       3. `Google_Sheet_URL` (make sure to replace `Google_Sheet_URL` with the URL of your Google sheet **ONLY IF** *you did not add the optional URL in the first step*)
