@@ -64,8 +64,23 @@ _____________________________________________________
 2. Update the `client-ID` and `client-secret` with your own, given to you by Google when you register an OAuth 2.0 client with Google via Google API Dashboard's [credential manager]([https://console.cloud.google.com/apis/dashboard](https://console.cloud.google.com/apis/credentials)). Go to the [Getting an OAuth Token section](#Getting-an-OAuth-Token) of this readme for a walkthrough.
    1. You are required to pass an OAuth Consent Screen. (Walkthrough found [here](#OAuth-consent-screen))
 3. Update the AI token
+   1. Go to [replicate's website](https://replicate.com/docs/get-started/python#authenticate) to create a free account (by linking your GitHub account). NOTE: you get 10 free API calls to the AI. You may wish to add a payment method. This will charge you approx $0.000021 per API call using the default settings. Feel free to set a monthly "Spend Limit" on [their billing page](https://replicate.com/account/billing). Supported models and pricing can be found on [their pricing page, in the language models section](https://replicate.com/pricing#language-models)
+   2. Model Options:
+      1. llama-2-13b
+      2. *llama-2-70b* (**default**)
+      3. llama-2-7b
+      4. meta-llama-3-70b
+      5. meta-llama-3-8b
+      6. mistral-7b-v0.1
 4. Update the Google Form ID
-5. Update the Google Sheets ID
+   1. Run the update script using the following code in a python-enabled terminal. 
+      1. `python3 update.py`
+      2. `update_form`
+      3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google form)
+6. Update the Google Sheets ID
+      1. `python3 update.py`
+      2. `update_spreadsheet`
+      3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google sheet)
 
 <br>
 
