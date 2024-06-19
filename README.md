@@ -131,7 +131,7 @@ Navigate to the `credentials` tab and select the `+ CREATE CREDENTIALS` button t
 
 Select the second item (`OAuth client ID`, sub-text: "Requests user consent so your app can access the user's data")
 
-This will bring you to the "Create OAuth client ID" page. **However**, to be able to continue you need to fill out the `OAuth consent screen` and pass the screening process. The step-by-step process is in the [OAuth consent screen](#OAuth-consent-screen) section.
+This will bring you to the "Create OAuth client ID" page.
 
 Finally, click the application type dropdown, select `Desktop app`, and name it whatever you'd like.
 
