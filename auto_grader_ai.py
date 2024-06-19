@@ -1,16 +1,17 @@
-import ai
-from update_token import set_environ
-from securepassing import safe_logger as get_token
-# from RubricStructures import __PLACEHOLDER__
+import replicate
+from update import set_environ
+from securepassing import SecureData
+from util import InvalidUsageError, from_csv_safe
+
 
 
 class Auto_Grader_AI:
     def __init__(self, rubric: str, question: str):
         self.rubric: str = rubric
         self.question: str = question
-        self._combiner = Auto_Grader_AI.combiner
+        self._combiner: callable = Auto_Grader_AI.default_combiner
 
-    def override_combiner(self, combiner) -> None:
+    def override_combiner(self, combiner: callable) -> None:
         self._combiner = combiner
 
     def grade_splitter(self, submission: str, splix: str = '\n', quantity: int = 2) -> list:
@@ -21,22 +22,43 @@ class Auto_Grader_AI:
         submission: str,
         max_new_tokens: int = 250
     ) -> str:
-        set_environ(get_token())
-        return ai.response(self._combiner(self.question, submission, self.rubric))
-        # print(self._combiner(self.question, submission, self.rubric))
-        # exit()
+        set_environ(SecureData.safe_logger())
+        return ai.generate_response(
+            self._combiner(self.question, submission, self.rubric),
+            max_new_tokens=max_new_tokens
+        )
 
     @staticmethod
-    def combiner(question: str, submission:str,  rubric: str, prefix_file: str = 'background.txt') -> str:
+    def default_combiner(question: str, submission:str,  rubric: str, prefix_file: str = 'background.txt') -> str:
         with open(prefix_file, 'r') as f:
             prefix = f.read()
         tripple_quote = '"""'
         return f'{prefix}' \
-               f'*RUBRIC*\n{tripple_quote}\n{csv_unsafe(rubric)}\n{tripple_quote}\n\n\n'\
-               f'*QUESTION*\n{tripple_quote}\n{csv_unsafe(question)}\n{tripple_quote}\n\n\n'\
-               f'*SUBMISSION*\n{tripple_quote}\n{csv_unsafe(submission)}\n{tripple_quote}'
-    
+               f'*RUBRIC*\n{tripple_quote}\n{from_csv_safe(rubric)}\n{tripple_quote}\n\n\n'\
+               f'*QUESTION*\n{tripple_quote}\n{from_csv_safe(question)}\n{tripple_quote}\n\n\n'\
+               f'*SUBMISSION*\n{tripple_quote}\n{from_csv_safe(submission)}\n{tripple_quote}'
 
 
-def csv_unsafe(s: str) -> str:
-    return s.replace('<INSERT_COMMA>', ',')
+
+class ai:
+    @staticmethod
+    def generate_response(prompt, max_new_tokens: int = 250) -> str:
+        try:
+            concat: str = ''
+            for event in replicate.stream(
+                    "meta/llama-2-70b-chat",
+                    input={
+                        "prompt": prompt,
+                        "max_new_tokens": max_new_tokens
+                    },
+            ):
+                concat += str(event)
+            return concat
+        except httpx.ConnectTimeout as hct:
+            print(concat)
+            raise hct
+
+
+
+if __name__ == "__main__":
+    raise InvalidUsageError("This file should not be run. Only import this file and its contents. Do not run this file directly.")

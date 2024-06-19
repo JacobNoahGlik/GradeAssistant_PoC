@@ -1,8 +1,6 @@
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
-from writer import safe_write
-
-__PLACEHOLDER__: str = '<INSERT_COMMA>'
+from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap
 
 class RubricTable:
     def __init__(self, filename: str):
@@ -21,11 +19,10 @@ class RubricTable:
         return s
     
     def _load_rubric_table(self) -> None:
-        global __PLACEHOLDER__
         with open(self.filename, "r") as table:
             lines = table.read().split('\n')
         self._cols = [
-            col.replace(__PLACEHOLDER__, ',') 
+            comma_swap(col)
             for col in lines[0].split(',')
         ]
         self._search_for_question_id()
@@ -34,12 +31,12 @@ class RubricTable:
                 continue
             row = line.split(',')
             self.rubric[
-                row[self.qid].replace(__PLACEHOLDER__, ',')
+                comma_swap(row[self.qid])
             ] = self._dictify_row(row)
 
     def rubric_by_question(self, question: str) -> None | str:
         if question not in self.rubric.keys():
-            keys = [csv_safe_text(key) for key in self.rubric.keys()]
+            keys = [to_csv_safe(key) for key in self.rubric.keys()]
             if question not in keys:
                 return None
             index = keys.index(question)
@@ -81,15 +78,11 @@ class Grader:
         self._load_gradeable_questions()
 
     def _load_gradeable_questions(self) -> None:
-        kyes = [csv_safe_text(key) for key in self.Rubric.rubric.keys()] # CHANGE
+        kyes = [to_csv_safe(key) for key in self.Rubric.rubric.keys()]
         for q in self.Submissions.get_questions():
-            question = csv_safe_text(q)
+            question = to_csv_safe(q)
             if question in kyes:
                 self.Gradeable_questions.append(question)
-            # else:
-            #    print(f'Question "{question}" not found in rubric table {self.Filename}')
-            #     for i, key in enumerate(self.Rubric.rubric.keys()):
-            #         print(f'\t"{i + 2}. {key}"')
 
     def _get_total_iter(self) -> int:
         counter: int = 0
@@ -107,8 +100,8 @@ class Grader:
             for (responseId, response) in self.Submissions.responses_by_header(question):
                 ai_grade, ai_reasoning = ai.grade_splitter(response) #  'Score 3', 'made up' 
                 score: int = self._num(ai_grade)
-                name = csv_safe_text(self.Submissions.user_lookup(responseId))
-                std_out += f'{name},{csv_safe_text(question)},{csv_safe_text(response)},{value_to_score(score)},{csv_safe_text(ai_reasoning)}\n'
+                name = to_csv_safe(self.Submissions.user_lookup(responseId))
+                std_out += f'{name},{to_csv_safe(question)},{to_csv_safe(response)},{value_to_score(score)},{to_csv_safe(ai_reasoning)}\n'
                 counter += 1
                 self._add_grade(name, score)
                 print(f'AI has graded {counter} out of {total_iter} submissions', end='\r')
@@ -139,16 +132,32 @@ class Grader:
             self.Gradebook[user] = []
         self.Gradebook[user].append(grade)
 
-    def _gredebook_report(self) -> str:
-        out: str = ''
+    def _gredebook_report(self, path: str = './output/gradebook_report.csv') -> str:
+        header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volitility', 'Classification', 'Scores']
+        csv_str: str = ','.join(header) + '\n'
         for user in self.Gradebook.keys():
             grades: list = self.Gradebook[user]
             letter, percentage = self._letter_grade(sum(grades), len(grades))
-            out += f'{user}: {letter}\n    Reasoning:\n\t > AI Scores: [' + ','.join([str(g) for g in grades]) + f']\n\t > Avg Score: {percentage * 0.03} ({percentage}%)\n'
-        return out
+            email, phone_number = self.Submissions.get_email_and_phone(user)
+            volitility: float = calc_volatility(grades, 0, 9)
+            csv_str += ','.join(
+                [
+                    to_csv_safe(user),
+                    to_csv_safe(email),
+                    to_csv_safe(phone_number),
+                    to_csv_safe(letter),
+                    f'{percentage / 100}',
+                    f'{round(percentage * 0.09, 1)}',
+                    f'{volitility}',
+                    f'{classification(volitility)}',
+                    to_csv_safe(f'[{",".join([str(g) for g in grades])}]')
+                ]
+            ) + '\n'
+        with open(path, 'w') as f:
+            f.write(csv_str)
 
     def _letter_grade(self, number: int, times: int) -> tuple[str, float]:
-        grade: float = number / (times * 3)
+        grade: float = number / (times * 9)
         if grade >= 0.9:
             return ('A', round(grade * 100, 1))
         elif grade >= 0.8:
@@ -159,33 +168,6 @@ class Grader:
             return ('D', round(grade * 100, 1))
         return ('F', round(grade * 100, 1))
 
-def value_to_score(val: int) -> str:
-    return f'Score {val}'
 
-
-def update_adendum(adendum_location: str = 'adendum.gd', rubric_location: str = 'rubric.csv', length: int = 6):
-    global __PLACEHOLDER__
-    with open(adendum_location, 'r') as adendum:
-        lines = adendum.read().split('\n')
-    csv_add: str = '\n'
-    for i, line in enumerate(lines):
-        csv_add += f'{correct_string(line)},'
-        if i % length == length - 1:
-            csv_add = csv_add[:-1] + '\n'
-    with open(rubric_location, 'a') as rubric:
-        rubric.write(csv_add)
-
-
-def correct_string(s: str) -> str:
-    return s.replace('“', '"').replace('”', '"').replace('’', "'").replace(",", __PLACEHOLDER__)
-
-
-def csv_safe_text(s: str) -> str:
-    return s.replace('“', '"').replace('”', '"').replace('’', "'").replace(",", __PLACEHOLDER__).replace('\n', ' ')
-
-# def question_for_ai(rubric: RubricTable, question: str, response, background_file: str = 'background.txt')
-if __name__ == '__main__':
-    rubric = RubricTable('rubric.csv')
-    # print(rubric)
-    print(rubric.rubric_by_question('What was the greatest challenge that you faced in mentoring?  How did you learn/grow from it?'))
-    
+if __name__ == "__main__":
+    raise InvalidUsageError("This file should not be run. Only import this file and its contents. Do not run this file directly.")
