@@ -78,6 +78,7 @@ _____________________________________________________
       2. `update_form`
       3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google form)
 6. Update the Google Sheets ID
+   1. Run the update script using the following code in a python-enabled terminal. 
       1. `python3 update.py`
       2. `update_spreadsheet`
       3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google sheet)
@@ -118,7 +119,7 @@ _________________________
 
 Click on External and hit the blue `CREATE` button.
 
-![image](OAuthConcentScreen.png)
+![image](readme_images/OAuthConcentScreen.png)
 
 ____________________________________________
 
