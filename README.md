@@ -6,7 +6,7 @@ Upload projected grades and grade book to Google Sheets
 ## Usage
 
 1. Update your credentials to use this code. (step-by-step walkthrough found [here](#Update-Your-Credentials))
-2. Update your environment. (step-by-step walkthrough found [here](#Setting-Up-Your-Environment))
+2. Set up your environment. (step-by-step walkthrough found [here](#Setting-Up-Your-Environment))
 3. Run `python3 main.py` in a python-equipped terminal.
 
 <br>
@@ -61,8 +61,7 @@ _____________________________________________________
 ## Update Your Credentials
 
 1. Download the `credentials.json` file
-2. Update the `client-ID` and `client-secret` with your own, given to you by Google when you register an OAuth 2.0 client with Google via Google API Dashboard's [credential manager]([https://console.cloud.google.com/apis/dashboard](https://console.cloud.google.com/apis/credentials)). Go to the [Getting an OAuth Token section](#Getting-an-OAuth-Token) of this readme for a walkthrough.
-   1. You are required to pass an OAuth Consent Screen. (Walkthrough found [here](#OAuth-consent-screen))
+2. Update the `client-ID` and `client-secret` with your own, given to you by Google when you register an OAuth 2.0 client with Google via Google API Dashboard's [credential manager](https://console.cloud.google.com/apis/credentials). Go to the [Startup Endpoints section](#Startup-Endpoints) of this readme for a walkthrough on setting up your Google Project credentials.
 3. Update the AI token
    1. Go to [replicate's website](https://replicate.com/docs/get-started/python#authenticate) to create a free account (by linking your GitHub account). NOTE: you get 10 free API calls to the AI. You may wish to add a payment method. This will charge you approx $0.000021 per API call using the default settings. Feel free to set a monthly "Spend Limit" on [their billing page](https://replicate.com/account/billing). Supported models and pricing can be found on [their pricing page, in the language models section](https://replicate.com/pricing#language-models)
       1. Model Options:
@@ -105,6 +104,25 @@ _________________________
 
 <br>
 
+## Startup Endpoints
+
+To learn about setting up your endpoints for Google Sheets and Google Forms look at their "Python quickstart guides." ([Python quickstart | Google Sheets link](https://developers.google.com/sheets/api/quickstart/python), [Python quickstart | Google Forms link](https://developers.google.com/forms/api/quickstart/python))
+
+The short version is a 3-step process for both. 
+1. Enable the API - must be completed separately for Google Sheets and Google Forms
+   1. [Enable Google Sheets Endpoint link](https://console.cloud.google.com/flows/enableapi?apiid=sheets.googleapis.com)
+   2. [Enable Google Forms Endpoint link](https://console.cloud.google.com/flows/enableapi?apiid=forms.googleapis.com)
+2. Configure the OAuth consent screen (step-by-step guide in the [OAuth consent screen section](#OAuth-consent-screen))
+3. Authorize credentials for a desktop application (step-by-step guide in the [Getting an OAuth Token section](#Getting-an-OAuth-Token))
+
+<br>
+
+_________________________
+
+<br>
+
+<br>
+
 ## Getting an OAuth Token
 
 Go to [Google Cloud Consol's](https://console.cloud.google.com/) website and select the `APIs & Services` button.
@@ -131,11 +149,14 @@ _________________________
 
 ## OAuth consent screen
 
+[Navigate to Google's OAuth Consent Screen](https://console.cloud.google.com/apis/credentials/consent)
+
+**Make sure the correct Google Project is selected in the top left!**
+
 Click on External and hit the blue `CREATE` button.
 
 ![image](readme_images/OAuthConcentScreen.png)
 
-____________________________________________
 
 <br>
 
@@ -152,7 +173,6 @@ Enter your email again into the "Email Address" text-entry box with the subtext:
 
 ✔️ Select the `Save and Continue` button at the bottom of the page, **leaving everything else blank**.
 
-____________________________________________
 
 <br>
 
@@ -162,22 +182,26 @@ ____________________________________________
 
 Select the `ADD OR REMOVE SCOPES` button to open a table of scopes. The following table can be found on page 3. (results 22-27)
 
-|add scope| API | Scope | User-facing description |
-|---------|-----|-------|-------------------------|
-|☐|Google Forms API | .../auth/drive | See, edit, create, and delete all of your Google Drive files|
-|☐|Google Forms API | .../auth/drive.file | See, edit, create, and delete only the specific Google Drive files you use with this app|
-|☐|Google Forms API | .../auth/forms.body | See, edit, create, and delete all your Google Forms forms|
-|☐|Google Forms API | .../auth/drive.readonly | See and download all your Google Drive files|
-|☑️|Google Forms API | .../auth/forms.body.readonly | See all your Google Forms forms|
-|☑️|Google Forms API | .../auth/forms.responses.readonly | See all responses to your Google Forms forms|
+|add scope| API             | Scope                             | User-facing description                                                                  |
+|---------|-----------------|-----------------------------------|------------------------------------------------------------------------------------------|
+|☐|Google Forms API        | .../auth/drive                    | See, edit, create, and delete all of your Google Drive files                             |
+|☐|Google Forms API        | .../auth/drive.file               | See, edit, create, and delete only the specific Google Drive files you use with this app |
+|☐|Google Forms API        | .../auth/forms.body               | See, edit, create, and delete all your Google Forms forms                                |
+|☐|Google Forms API        | .../auth/drive.readonly           | See and download all your Google Drive files                                             |
+|☑️| Google Forms API      | .../auth/forms.body.readonly      | See all your Google Forms forms                                                          |
+|☑️| Google Forms API      | .../auth/forms.responses.readonly | See all responses to your Google Forms forms                                             |
+|☑️| Google Sheets API     | .../auth/spreadsheets             | See, edit, create, and delete all your Google Sheets spreadsheets                        |
+|☑️| Google Sheets API     | .../auth/spreadsheets.readonly    | See all your Google Sheets spreadsheets                                                  |
+|☐| Service Management API | .../auth/service.management       | Manage your Google API service configuration                                             |
 
-Select the two rows above (26: `forms.body.readonly` and 27: `forms.responses.readonly`)
+Select the four rows above (28: `forms.body.readonly`, 29: `forms.responses.readonly`, 30: `spreadsheets`, and 31: `service.management`)
 
 Scroll down and select the blue `UPDATE` button at the bottom to close the table and return to the previous page (Edit app registration - Scopes)
 
+Note: *if these rows are missing, you may need to enable these endpoints for your Google Project. Learn more in the [Startup Endpoints Section](#Startup-Endpoints)*
+
 ✔️ Select the `SAVE AND CONTINUE` button at the bottom of the page.
 
-____________________________________________
 
 <br>
 
@@ -191,7 +215,6 @@ Add the Gmail account that owns the Google Form OR has viewing access to the Goo
 
 ✔️ Scroll to the bottom and select the `SAVE AND CONTINUE` button.
 
-____________________________________________
 
 <br>
 
