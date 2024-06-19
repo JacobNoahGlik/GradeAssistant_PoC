@@ -66,12 +66,20 @@ _____________________________________________________
 3. Update the AI token
    1. Go to [replicate's website](https://replicate.com/docs/get-started/python#authenticate) to create a free account (by linking your GitHub account). NOTE: you get 10 free API calls to the AI. You may wish to add a payment method. This will charge you approx $0.000021 per API call using the default settings. Feel free to set a monthly "Spend Limit" on [their billing page](https://replicate.com/account/billing). Supported models and pricing can be found on [their pricing page, in the language models section](https://replicate.com/pricing#language-models)
       1. Model Options:
-         1. llama-2-13b
-         2. *llama-2-70b* (**default**)
-         3. llama-2-7b
-         4. meta-llama-3-70b
-         5. meta-llama-3-8b
-         6. mistral-7b-v0.1
+         1. meta/llama-2-13b
+         2. meta/llama-2-13b-chat
+         3. meta/llama-2-70b
+         4. *meta/llama-2-70b-chat* (**default**)
+         5. meta/llama-2-7b
+         6. meta/llama-2-7b-chat
+         7. meta/meta-llama-3-70b
+         8. meta/meta-llama-3-70b-instruct
+         9. meta/meta-llama-3-8b
+         10. meta/meta-llama-3-8b-instruct
+         11. mistralai/mistral-7b-instruct-v0.2
+         12. mistralai/mistral-7b-v0.1
+         13. mistralai/mixtral-8x7b-instruct-v0.1
+      2. Model option is set in the `auto_grader_ai.py` file in the `ai` class, in the `generate_response` static method as the first parameter of the `replicate.stream()` function. Change it to any other model if you'd like.
    2. Once you have an API token from [replicate's token section on their website](https://replicate.com/account/api-tokens): copy the token and run the following in a Python-enabled terminal.
       1. `python3 update.py`
       2. `update_token`
