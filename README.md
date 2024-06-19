@@ -149,7 +149,7 @@ _________________________
 
 ## OAuth consent screen
 
-[Navigate to Google's OAuth Consent Screen](https://console.cloud.google.com/apis/credentials/consent)
+[Navigate to Google's OAuth Consent Screen's website](https://console.cloud.google.com/apis/credentials/consent)
 
 **Make sure the correct Google Project is selected in the top left!**
 
