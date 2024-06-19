@@ -74,14 +74,16 @@ _____________________________________________________
       6. mistral-7b-v0.1
 4. Update the Google Form ID
    1. Run the update script using the following code in a python-enabled terminal. 
-      1. `python3 update.py`
+      1. `python3 update.py [OPTIONAL: Google_Form_URL]` (make sure to replace `[OPTIONAL: Google_Form_URL]` with the URL of your Google form **AND** *skip the 3rd step if you choose to do this*)
       2. `update_form`
-      3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google form)
+      3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google form **ONLY IF** *you did not add the optional URL in the first step*)
+         1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
 6. Update the Google Sheets ID
    1. Run the update script using the following code in a python-enabled terminal. 
-      1. `python3 update.py`
+      1. `python3 update.py [OPTIONAL: Google_Sheet_URL]` (make sure to replace `[OPTIONAL: Google_Sheet_URL]` with the URL of your Google sheet **AND** *skip the 3rd step if you choose to do this*)
       2. `update_spreadsheet`
-      3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google sheet)
+      3. `Google_Sheet_URL` (make sure to replace `Google_Sheet_URL` with the URL of your Google sheet **ONLY IF** *you did not add the optional URL in the first step*)
+         1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
 
 <br>
 
