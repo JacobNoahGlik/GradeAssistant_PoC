@@ -1,6 +1,7 @@
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
 from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap, time_formater
+from presets import Presets
 
 class RubricTable:
     def __init__(self, filename: str):
@@ -63,6 +64,8 @@ class RubricTable:
         self.qid = -1
         raise QuestionColumnNotFoundException(f'Could not find question column in rubric table {self.filename}.\n{self._cols = }')
 
+
+
 class QuestionColumnNotFoundException(Exception):
     pass
 
@@ -90,7 +93,7 @@ class Grader:
             counter += len(self.Submissions.responses_by_header(question))
         return counter
 
-    def grade_submissions(self, file_out: str = './output/graded_submissions.csv') -> None:
+    def grade_submissions(self, file_out: str) -> None:
         std_out: str = 'Name,Question,Response,AI Grade,AI Reasoning\n'
         total_iter: int = self._get_total_iter()
         counter: int = 0
@@ -134,7 +137,15 @@ class Grader:
             self.Gradebook[user] = []
         self.Gradebook[user].append(grade)
 
-    def _gredebook_report(self, path: str = './output/gradebook_report.csv') -> str:
+    def run_grading_routine(
+            self, 
+            graded_submissions_file: str, 
+            gradebook_report_file: str
+        ) -> str:
+        self.grade_submissions(graded_submissions_file)
+        return self._gredebook_report(gradebook_report_file)
+
+    def _gredebook_report(self, path: str) -> str:
         header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
         csv_str: str = ','.join(header) + '\n'
         for user in self.Gradebook.keys():
