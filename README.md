@@ -47,6 +47,14 @@ _____________________________________________________
    1. Try running `pip install getpass` again
    2. Try running `pip install --upgrade --force-reinstall getpass` if the above does not work
 
+<br>
+
+### 400 Error When Uploading Local CSV to Google Sheets
+###### Error will look like this:
+```cmd
+<HttpError 400 when requesting https://sheets.googleapis.com/v4/spreadsheets/1ppM-ieo_sFMIXKejrzGge4hVF4kDONw2yuv5NGdMPQ4:batchUpdate?alt=json returned "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25". Details: "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25">
+```
+This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
 
 <br>
 
