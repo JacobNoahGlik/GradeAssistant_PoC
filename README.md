@@ -58,6 +58,21 @@ _____________________________________________________
 
 <br>
 
+## Possible Considerations for Enterprise Use
+1. Security
+2. Better AI training
+3. Improving API call speed (Multithreading) 
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
 ## Update Your Credentials
 
 1. Download the `credentials.json` file
