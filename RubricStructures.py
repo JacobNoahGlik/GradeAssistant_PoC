@@ -97,7 +97,7 @@ class Grader:
         avg_api_call_time: float = 3.41
         projected_time: int = total_iter * avg_api_call_time
         for question in self.Gradeable_questions:
-            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
+            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
             ai = Auto_Grader_AI(self.Rubric.rubric_by_question(question), question)
             for (responseId, response) in self.Submissions.responses_by_header(question): # this for-loop should be replaced with multithreading
                 ai_grade, ai_reasoning = ai.grade_splitter(response) # this takes about 3.5 seconds per api-call
@@ -106,7 +106,7 @@ class Grader:
                 std_out += f'{name},{to_csv_safe(question)},{to_csv_safe(response)},{value_to_score(score)},{to_csv_safe(ai_reasoning)}\n'
                 counter += 1
                 self._add_grade(name, score)
-                print(f'AI has graded {counter} out of {total_iter} submissions', end='\r')
+                print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
         print('')
         try_again: bool = True
         while try_again:
@@ -135,13 +135,13 @@ class Grader:
         self.Gradebook[user].append(grade)
 
     def _gredebook_report(self, path: str = './output/gradebook_report.csv') -> str:
-        header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volitility', 'Classification', 'Scores']
+        header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
         csv_str: str = ','.join(header) + '\n'
         for user in self.Gradebook.keys():
             grades: list = self.Gradebook[user]
             letter, percentage = self._letter_grade(sum(grades), len(grades))
             email, phone_number = self.Submissions.get_email_and_phone(user)
-            volitility: float = calc_volatility(grades, 0, 9)
+            Volatility: float = calc_volatility(grades, 0, 9)
             csv_str += ','.join(
                 [
                     to_csv_safe(user),
@@ -150,8 +150,8 @@ class Grader:
                     to_csv_safe(letter),
                     f'{percentage / 100}',
                     f'{round(percentage * 0.09, 1)}',
-                    f'{volitility}',
-                    f'{classification(volitility)}',
+                    f'{Volatility}',
+                    f'{classification(Volatility)}',
                     to_csv_safe(f'[{",".join([str(g) for g in grades])}]')
                 ]
             ) + '\n'
