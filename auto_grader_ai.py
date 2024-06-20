@@ -14,6 +14,8 @@ class Auto_Grader_AI:
         self._combiner = combiner
 
     def grade_splitter(self, submission: str, splix: str = '\n', quantity: int = 2) -> list:
+        if '\n' not in submission:
+            return ['Score: 0', 'Abusive action detected. Type: Possible AI injection attack.']
         return self.grade(submission).split(splix, quantity - 1)
 
     def grade(
