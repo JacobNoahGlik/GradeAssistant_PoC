@@ -1,7 +1,9 @@
 # Grade Assistant Proof of Concept (PoC)
 Use AI to grade open-response questions on a Google Forms Quiz or Application
 
-Upload projected grades and grade book to Google Sheets
+Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
+
+###### Please note this readme's [Possible Considerations for Enterprise Use section](#Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. This is a Proof of Concept and with that in mind: we have taken short-cuts that you may wish to remedy before using this codebase directly for enterprise use.
 
 ## Usage
 
