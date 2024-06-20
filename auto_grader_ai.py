@@ -1,7 +1,6 @@
 import replicate
-from update import set_environ
 from securepassing import SecureData
-from util import InvalidUsageError, from_csv_safe
+from util import InvalidUsageError, from_csv_safe, set_environ, Counter
 
 
 
@@ -41,6 +40,7 @@ class Auto_Grader_AI:
 
 
 class ai:
+    api_calls: Counter = Counter('ai_api_calls.counter')
     @staticmethod
     def generate_response(prompt, max_new_tokens: int = 250) -> str:
         try:
@@ -53,6 +53,7 @@ class ai:
                     },
             ):
                 concat += str(event)
+            ai.api_calls.increment()
             return concat
         except httpx.ConnectTimeout as hct:
             print(concat)

@@ -1,6 +1,6 @@
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
-from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap
+from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap, time_formater
 
 class RubricTable:
     def __init__(self, filename: str):
@@ -94,11 +94,13 @@ class Grader:
         std_out: str = 'Name,Question,Response,AI Grade,AI Reasoning\n'
         total_iter: int = self._get_total_iter()
         counter: int = 0
+        avg_api_call_time: float = 3.41
+        projected_time: int = total_iter * avg_api_call_time
         for question in self.Gradeable_questions:
-            print(f'AI has graded {counter} out of {total_iter} submissions', end='\r')
+            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
             ai = Auto_Grader_AI(self.Rubric.rubric_by_question(question), question)
-            for (responseId, response) in self.Submissions.responses_by_header(question):
-                ai_grade, ai_reasoning = ai.grade_splitter(response) #  'Score 3', 'made up' 
+            for (responseId, response) in self.Submissions.responses_by_header(question): # this for-loop should be replaced with multithreading
+                ai_grade, ai_reasoning = ai.grade_splitter(response) # this takes about 3.5 seconds per api-call
                 score: int = self._num(ai_grade)
                 name = to_csv_safe(self.Submissions.user_lookup(responseId))
                 std_out += f'{name},{to_csv_safe(question)},{to_csv_safe(response)},{value_to_score(score)},{to_csv_safe(ai_reasoning)}\n'

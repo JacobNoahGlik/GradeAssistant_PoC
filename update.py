@@ -4,12 +4,11 @@ from securepassing import SecureData
 from util import get_pass, selection
 
 
-
 def get_token() -> str:
     if len(sys.argv) > 1:
         return sys.argv[1]
     return get_pass("Enter your token: ")
-
+       
 
 def update_token():
     token = get_token()
@@ -18,7 +17,6 @@ def update_token():
         print('Token updated successfully')
     except Exception as e:
         print(f'Error updating token: {e}')
-
 
 def update_form(form_url: str):
     form_id = form_url.split('/d/', 1)[1]
@@ -36,7 +34,6 @@ def update_form(form_url: str):
         main.write(main_lines)
     print(f'updated with {form_id}')
 
-
 def update_sheet(sheet_url: str):
     sheet_id = sheet_url.split('/d/', 1)[1]
     sheet_id = sheet_id.split('/', 1)[0]
@@ -52,8 +49,6 @@ def update_sheet(sheet_url: str):
     with open(containing_file, 'w') as main:
         main.write(main_lines)
     print(f'updated with {sheet_id}')
-
-
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:

@@ -130,6 +130,16 @@ def comma_swap(s: str) -> str:
     return s.replace(',', Presets.CommaPlaceholder)
 
 
+
+def time_formater(seconds: float) -> str:
+    hours: int = math.floor(seconds / 3600)
+    seconds -= hours * 3600
+    minutes: int = math.floor(seconds / 60)
+    seconds -= minutes * 60
+    return f'{hours}:{minutes}:{seconds}'
+
+
+
 class Presets:
     CommaPlaceholder: str = '<INSERT_COMMA>'
 
@@ -137,6 +147,37 @@ class Presets:
 
 class InvalidUsageError(Exception):
     pass
+
+
+
+class Counter:
+    def __init__(self, file: str = 'counter.txt'):
+        self.file: str = file
+        self.count: int = 0
+        if not os.path.exists(self.file) or not os.path.isfile(self.file):
+            self._reset()
+        else:
+            self._pull()
+    
+    def increment(self, incement_by: int = 1) -> None:
+        self.count += incement_by
+        self._update()
+
+    def overwrite(self, value: int) -> None:
+        self.count = value
+        self._update()
+
+    def _reset(self) -> None:
+        self.count = 0
+        self._update()
+
+    def _pull(self) -> int:
+        with open(self.file, 'r') as f:
+            self.count = int(f.read())
+    
+    def _update(self) -> None:
+        with open(self.file, 'w') as f:
+            f.write(f'{self.count}')
 
 
 
