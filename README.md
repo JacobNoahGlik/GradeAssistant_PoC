@@ -1,7 +1,9 @@
 # Grade Assistant Proof of Concept (PoC)
 Use AI to grade open-response questions on a Google Forms Quiz or Application
 
-Upload projected grades and grade book to Google Sheets
+Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
+
+###### Please note this readme's [Possible Considerations for Enterprise Use section](#Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. This is a Proof of Concept and with that in mind: we have taken short-cuts that you may wish to remedy before using this codebase directly for enterprise use.
 
 ## Usage
 
@@ -47,6 +49,29 @@ _____________________________________________________
    1. Try running `pip install getpass` again
    2. Try running `pip install --upgrade --force-reinstall getpass` if the above does not work
 
+<br>
+
+### 400 Error When Uploading Local CSV to Google Sheets
+###### Error will look like this:
+```cmd
+<HttpError 400 when requesting https://sheets.googleapis.com/v4/spreadsheets/1ppM-ieo_sFMIXKejrzGge4hVF4kDONw2yuv5NGdMPQ4:batchUpdate?alt=json returned "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25". Details: "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25">
+```
+This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+## Possible Considerations for Enterprise Use
+1. Security
+2. Better AI training
+3. Improving API call speed (Multithreading) 
 
 <br>
 

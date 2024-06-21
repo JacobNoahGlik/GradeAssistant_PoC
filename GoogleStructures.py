@@ -14,10 +14,6 @@ from util import get_sheet_values, to_csv_safe, InvalidUsageError
 
 
 
-FORM_ID : str = "1p28w1cHyYXombVt7XbInwGcYa-y5OMNSbFWzQMncups"
-SPREADSHEET_ID : str = "19V-HINY0_b8xAgFiTxdlq-LyoM0HGd_G1HuMOj-Zf10"
-
-
 class SubmissionTable:
     def __init__(self, questions: list['GoogleFormsQuestion']):
         self.header = [
@@ -61,9 +57,13 @@ class SubmissionTable:
             question_text: str = to_csv_safe(self._id_to_q[question_id])
             if question_text not in self.header:
                 raise Exception(f'Could not find Question({question_text}) in table({self.header})')
-            temp[self.header.index(question_text)] = answer['textAnswers']['answers'][0]['value'].replace('“', '"').replace('”', '"').replace('’', "'")
+            temp[self.header.index(question_text)] = answer['textAnswers']['answers'][0]['value'].replace('“', '"').replace('”', '"').replace('’', "'").replace(',', '<INSERT_COMMA>')
         self.submissions[submission['responseId']] = temp
         self._name_lookup[temp[3]] = (temp[4], temp[5])
+
+    def bulk_add_submissions(self, submissions: list):
+        for submission in submissions:
+            self.add_submission(submission)
         
     def get_email_and_phone(self, name) -> tuple[str, str]:
         if name not in self._name_lookup.keys():
@@ -193,6 +193,9 @@ class GoogleUtils:
                 if name == SHEET_NAME:
                     sheet_id = id
                     break
+            if sheet_id is None:
+                result = GoogleUtils.create_sheet(service, spreadsheet_id, SHEET_NAME)
+                sheet_id = result.get('replies')[0].get('addSheet').get('properties').get('sheetId')
             trying: bool = True
             while trying:
                 try:
@@ -234,6 +237,26 @@ class GoogleUtils:
                 spreadsheetId=spreadsheet_id, 
                 body=body
             ).execute()
+        except HttpError as err:
+            print(err)
+
+    @staticmethod
+    def create_sheet(service, spreadsheet_id, sheet_name):
+        try:
+            body = {
+                'requests': [{
+                    'addSheet': {
+                        'properties': {
+                            'title': sheet_name
+                        }
+                    }
+                }]
+            }
+            result = service.spreadsheets().batchUpdate(
+                spreadsheetId=spreadsheet_id,
+                body=body
+            ).execute()
+            return result
         except HttpError as err:
             print(err)
 

@@ -1,6 +1,7 @@
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
-from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap
+from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap, time_formater
+from presets import Presets
 
 class RubricTable:
     def __init__(self, filename: str):
@@ -63,6 +64,8 @@ class RubricTable:
         self.qid = -1
         raise QuestionColumnNotFoundException(f'Could not find question column in rubric table {self.filename}.\n{self._cols = }')
 
+
+
 class QuestionColumnNotFoundException(Exception):
     pass
 
@@ -90,21 +93,23 @@ class Grader:
             counter += len(self.Submissions.responses_by_header(question))
         return counter
 
-    def grade_submissions(self, file_out: str = './output/graded_submissions.csv') -> None:
+    def grade_submissions(self, file_out: str) -> None:
         std_out: str = 'Name,Question,Response,AI Grade,AI Reasoning\n'
         total_iter: int = self._get_total_iter()
         counter: int = 0
+        avg_api_call_time: float = 3.41
+        projected_time: int = total_iter * avg_api_call_time
         for question in self.Gradeable_questions:
-            print(f'AI has graded {counter} out of {total_iter} submissions', end='\r')
+            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
             ai = Auto_Grader_AI(self.Rubric.rubric_by_question(question), question)
-            for (responseId, response) in self.Submissions.responses_by_header(question):
-                ai_grade, ai_reasoning = ai.grade_splitter(response) #  'Score 3', 'made up' 
+            for (responseId, response) in self.Submissions.responses_by_header(question): # this for-loop should be replaced with multithreading
+                ai_grade, ai_reasoning = ai.grade_splitter(response) # this takes about 3.5 seconds per api-call
                 score: int = self._num(ai_grade)
                 name = to_csv_safe(self.Submissions.user_lookup(responseId))
                 std_out += f'{name},{to_csv_safe(question)},{to_csv_safe(response)},{value_to_score(score)},{to_csv_safe(ai_reasoning)}\n'
                 counter += 1
                 self._add_grade(name, score)
-                print(f'AI has graded {counter} out of {total_iter} submissions', end='\r')
+                print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
         print('')
         try_again: bool = True
         while try_again:
@@ -132,14 +137,22 @@ class Grader:
             self.Gradebook[user] = []
         self.Gradebook[user].append(grade)
 
-    def _gredebook_report(self, path: str = './output/gradebook_report.csv') -> str:
-        header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volitility', 'Classification', 'Scores']
+    def run_grading_routine(
+            self, 
+            graded_submissions_file: str, 
+            gradebook_report_file: str
+        ) -> str:
+        self.grade_submissions(graded_submissions_file)
+        return self._gredebook_report(gradebook_report_file)
+
+    def _gredebook_report(self, path: str) -> str:
+        header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
         csv_str: str = ','.join(header) + '\n'
         for user in self.Gradebook.keys():
             grades: list = self.Gradebook[user]
             letter, percentage = self._letter_grade(sum(grades), len(grades))
             email, phone_number = self.Submissions.get_email_and_phone(user)
-            volitility: float = calc_volatility(grades, 0, 9)
+            Volatility: float = calc_volatility(grades, 0, 9)
             csv_str += ','.join(
                 [
                     to_csv_safe(user),
@@ -148,8 +161,8 @@ class Grader:
                     to_csv_safe(letter),
                     f'{percentage / 100}',
                     f'{round(percentage * 0.09, 1)}',
-                    f'{volitility}',
-                    f'{classification(volitility)}',
+                    f'{Volatility}',
+                    f'{classification(Volatility)}',
                     to_csv_safe(f'[{",".join([str(g) for g in grades])}]')
                 ]
             ) + '\n'

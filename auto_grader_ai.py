@@ -1,7 +1,7 @@
 import replicate
-from update import set_environ
+from presets import Presets
 from securepassing import SecureData
-from util import InvalidUsageError, from_csv_safe
+from util import InvalidUsageError, from_csv_safe, set_environ, Counter
 
 
 
@@ -15,7 +15,13 @@ class Auto_Grader_AI:
         self._combiner = combiner
 
     def grade_splitter(self, submission: str, splix: str = '\n', quantity: int = 2) -> list:
-        return self.grade(submission).split(splix, quantity - 1)
+        ai_response: str = self.grade(submission)
+        if '\n' not in ai_response:
+            return [
+                'Score: 0', 
+                f'Abusive action detected. Type: Possible AI injection attack. Initial assessment: "{ai_response}"'
+            ]
+        return ai_response.split(splix, quantity - 1)
 
     def grade(
         self,
@@ -34,25 +40,27 @@ class Auto_Grader_AI:
             prefix = f.read()
         tripple_quote = '"""'
         return f'{prefix}' \
-               f'*RUBRIC*\n{tripple_quote}\n{from_csv_safe(rubric)}\n{tripple_quote}\n\n\n'\
-               f'*QUESTION*\n{tripple_quote}\n{from_csv_safe(question)}\n{tripple_quote}\n\n\n'\
-               f'*SUBMISSION*\n{tripple_quote}\n{from_csv_safe(submission)}\n{tripple_quote}'
+               f'**RUBRIC**\n{tripple_quote}\n{from_csv_safe(rubric)}\n{tripple_quote}\n\n\n'\
+               f'**QUESTION**\n{tripple_quote}\n{from_csv_safe(question)}\n{tripple_quote}\n\n\n'\
+               f'**SUBMISSION**\n{tripple_quote}\n{from_csv_safe(submission)}\n{tripple_quote}'
 
 
 
 class ai:
+    api_calls: Counter = Counter('ai_api_calls.counter')
     @staticmethod
     def generate_response(prompt, max_new_tokens: int = 250) -> str:
         try:
             concat: str = ''
             for event in replicate.stream(
-                    "meta/llama-2-70b-chat",
+                    Presets.AI_MODEL,
                     input={
                         "prompt": prompt,
                         "max_new_tokens": max_new_tokens
                     },
             ):
                 concat += str(event)
+            ai.api_calls.increment()
             return concat
         except httpx.ConnectTimeout as hct:
             print(concat)

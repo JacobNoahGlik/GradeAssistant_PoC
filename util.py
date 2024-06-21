@@ -2,6 +2,7 @@ import warnings
 import getpass
 import os
 import math
+from presets import Presets
 
 
 
@@ -74,11 +75,11 @@ def get_sheet_values(sheet) -> tuple[str, str]:
 
 
 def to_csv_safe(s: str) -> str:
-    return s.replace(',', Presets.CommaPlaceholder).replace('“', '"').replace('”', '"').replace('’', "'").replace('\n', ' ')
+    return s.replace(',', Presets.COMMA_PLACEHOLDER).replace('“', '"').replace('”', '"').replace('’', "'").replace('\n', ' ')
 
 
 def from_csv_safe(s: str) -> str:
-    return s.replace(Presets.CommaPlaceholder, ',')
+    return s.replace(Presets.COMMA_PLACEHOLDER, ',')
 
 
 def value_to_score(val: int) -> str:
@@ -98,7 +99,7 @@ def update_adendum(adendum_location: str = 'adendum.gd', rubric_location: str = 
 
 
 def correct_string(s: str) -> str:
-    return s.replace('“', '"').replace('”', '"').replace('’', "'").replace(",", Presets.CommaPlaceholder)
+    return s.replace('“', '"').replace('”', '"').replace('’', "'").replace(",", Presets.COMMA_PLACEHOLDER)
 
 
 def calc_volatility(scores: list[int], min: int, max: int, rounding: int = 2) -> float:
@@ -112,31 +113,65 @@ def calc_volatility(scores: list[int], min: int, max: int, rounding: int = 2) ->
     return round(volatility, rounding)
 
 
-def classification(volitility: float) -> str:
-    if volitility < 10:
+def classification(Volatility: float) -> str:
+    if Volatility < 15:
         return 'Very Consistent'
-    if volitility < 25:
+    if Volatility < 32:
         return 'Consistent'
-    if volitility < 50:
+    if Volatility < 55:
         return 'Somewhat Inconsistent'
-    if volitility < 75:
+    if Volatility < 70:
         return 'Very Inconsistent'
     return 'HIGHLY VOLATILE'
 
 
-
 def comma_swap(s: str) -> str:
-    """Replaces commas with the utils.Presets.CommaPlaceholder string."""
-    return s.replace(',', Presets.CommaPlaceholder)
+    """Replaces commas with the presets.Presets.COMMA_PLACEHOLDER string."""
+    return s.replace(',', Presets.COMMA_PLACEHOLDER)
 
 
-class Presets:
-    CommaPlaceholder: str = '<INSERT_COMMA>'
+def time_formater(seconds: float) -> str:
+    hours: int = math.floor(seconds / 3600)
+    seconds -= hours * 3600
+    minutes: int = math.floor(seconds / 60)
+    seconds -= minutes * 60
+    return f'{hours}:{minutes}:{seconds}'
 
 
 
 class InvalidUsageError(Exception):
     pass
+
+
+
+class Counter:
+    def __init__(self, file: str = 'counter.txt'):
+        self.file: str = file
+        self.count: int = 0
+        if not os.path.exists(self.file) or not os.path.isfile(self.file):
+            self._reset()
+        else:
+            self._pull()
+    
+    def increment(self, incement_by: int = 1) -> None:
+        self.count += incement_by
+        self._update()
+
+    def overwrite(self, value: int) -> None:
+        self.count = value
+        self._update()
+
+    def _reset(self) -> None:
+        self.count = 0
+        self._update()
+
+    def _pull(self) -> int:
+        with open(self.file, 'r') as f:
+            self.count = int(f.read())
+    
+    def _update(self) -> None:
+        with open(self.file, 'w') as f:
+            f.write(f'{self.count}')
 
 
 

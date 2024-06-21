@@ -1,4 +1,3 @@
-import os
 import sys
 from securepassing import SecureData
 from util import get_pass, selection
@@ -24,12 +23,12 @@ def update_form(form_url: str):
     form_id = form_url.split('/d/', 1)[1]
     form_id = form_id.split('/', 1)[0]
     main_lines: str = ''
-    containing_file: str = 'GoogleStructures.py'
+    containing_file: str = 'presets.py'
     with open(containing_file, 'r') as main:
         lines = main.readlines()
     for line in lines:
-        if line.startswith('FORM_ID: ') or line.startswith('FORM_ID '):
-            main_lines += f'FORM_ID : str = "{form_id}"\n'
+        if line.startswith('    GOOGLE_FORM_ID'):
+            main_lines += f'    GOOGLE_FORM_ID : str = "{form_id}"\n'
             continue
         main_lines += line
     with open(containing_file, 'w') as main:
@@ -41,12 +40,12 @@ def update_sheet(sheet_url: str):
     sheet_id = sheet_url.split('/d/', 1)[1]
     sheet_id = sheet_id.split('/', 1)[0]
     main_lines: str = ''
-    containing_file: str = 'GoogleStructures.py'
+    containing_file: str = 'presets.py'
     with open(containing_file, 'r') as main:
         lines = main.readlines()
     for i, line in enumerate(lines):
-        if line.startswith('SPREADSHEET_ID: ') or line.startswith('SPREADSHEET_ID '):
-            main_lines += f'SPREADSHEET_ID : str = "{sheet_id}"\n'
+        if line.startswith('    GOOGLE_SPREADSHEET_ID'):
+            main_lines += f'    GOOGLE_SPREADSHEET_ID : str = "{sheet_id}"\n'
             continue
         main_lines += line
     with open(containing_file, 'w') as main:
@@ -64,10 +63,10 @@ if __name__ == '__main__':
         }
         choice: callable = selection(functions)
         if choice == update_form:
-            update_form(input('Enter the URL of the google form: '))
+            update_form(input('Enter the URL of the Google Form: '))
             exit(0)
         if choice == update_sheet:
-            update_sheet(input('Enter the URL of the google spreadsheet: '))
+            update_sheet(input('Enter the URL of the Google Spreadsheet: '))
             exit(0)
         if choice == update_token:
             update_token()
