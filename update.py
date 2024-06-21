@@ -58,7 +58,7 @@ def run_choice(choice: str) -> bool:
             update_presets(
                 containing_file,
                 find,
-                f'{find}: str = "{process(input(replace))}"'
+                f'{find}: str = "{process(input(replace))}"\n'
             )
             return True
     return False
@@ -66,10 +66,10 @@ def run_choice(choice: str) -> bool:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 1 or not (len(sys.argv) == 2 and sys.argv[1] == '--show-all'):
+    if len(sys.argv) != 1 and not (len(sys.argv) == 2 and sys.argv[1] == '--show-all'):
         print('Argument missmatch')
         print('Usage: python3 update.py')
-        print('Options: ["update_form", "update_spreadsheet", "update_token"]')
+        print('Optional options: [--show-all]')
         exit(1)
 
     functions: list[str] = public_facing_functions

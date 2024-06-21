@@ -24,21 +24,23 @@ def set_environ(token: str) -> None:
 
 def selection(listing: dict[str, callable]) -> callable:
     print('Please select one of the following')
-    for i, key in enumerate(listing.keys()):
+    for i, key in enumerate(listing):
         print(f'    {i + 1}. {key}')
     selection = input('> ')
-    valid, response = validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing.keys()))
+    valid, response = validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing))
     while (not valid):
         print(f"Could not select. ERROR: '{response}'")
         print('Please select one of the following')
-        for i, key in enumerate(listing.keys()):
+        for i, key in enumerate(listing):
             print(f'    {i + 1}. {key}')
         selection = input('> ')
-        valid, response = validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing.keys()))
+        valid, response = validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing))
     if type(response) == int:
         return listing[
-            list(listing.keys())[response]
+            list(listing)[response]
         ]
+    if type(response) == str:
+        return response
     return listing[response]
 
 
@@ -140,13 +142,18 @@ def time_formater(seconds: float) -> str:
 
 def update_presets(presets_file: str, find: str, replace: str):
     with open(presets_file, 'r') as f:
-        lines: list[str] = f.read()
+        lines: list[str] = f.readlines()
+    found: bool = False
     for i, line in enumerate(lines):
-        if find in line:
+        if line.startswith(find):
             lines[i] = replace
-            print(f'> Presets.{replace.strip()}')
-    with open(presets_file, 'w') as f:
-        f.write(''.join(lines))
+            found = True
+    if found:
+        with open(presets_file, 'w') as f:
+            f.write(''.join(lines))
+        print(f'> Updated Successfully')
+    else:
+        print(f'> Update Failed')
 
 
 def id_strip(url: str) -> str:
