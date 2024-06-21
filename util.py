@@ -6,7 +6,7 @@ from presets import Presets
 
 
 
-def get_pass(message: str) -> str:
+def secure_input(message: str) -> str:
     password = getpass.getpass(message)
     return password
 
@@ -136,6 +136,25 @@ def time_formater(seconds: float) -> str:
     minutes: int = math.floor(seconds / 60)
     seconds -= minutes * 60
     return f'{hours}:{minutes}:{seconds}'
+
+
+def update_presets(presets_file: str, find: str, replace: str):
+    with open(presets_file, 'r') as f:
+        lines: list[str] = f.read()
+    for i, line in enumerate(lines):
+        if find in line:
+            lines[i] = replace
+            print(f'> Presets.{replace.strip()}')
+    with open(presets_file, 'w') as f:
+        f.write(''.join(lines))
+
+
+def id_strip(url: str) -> str:
+    id = url.split('/d/', 1)[1]
+    return id.split('/', 1)[0]
+
+
+identity = lambda x: x
 
 
 
