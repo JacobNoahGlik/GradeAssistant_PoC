@@ -1,5 +1,5 @@
 import sys
-from securepassing import SecureData
+from secureparsing import SecureParsing
 from util import secure_input, selection, update_presets, id_strip, identity
 
 
@@ -30,7 +30,7 @@ def get_token() -> str:
 def update_token():
     token = get_token()
     try:
-        SecureData.update_password(token)
+        SecureParsing.update_password(token)
         print('Token updated successfully')
     except Exception as e:
         print(f'Error updating token: {e}')

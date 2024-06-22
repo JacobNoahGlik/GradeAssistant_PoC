@@ -1,6 +1,6 @@
 import replicate
 from presets import Presets
-from securepassing import SecureData
+from secureparsing import SecureParsing
 from util import InvalidUsageError, from_csv_safe, set_environ, Counter
 
 
@@ -10,6 +10,7 @@ class Auto_Grader_AI:
         self.rubric: str = rubric
         self.question: str = question
         self._combiner: callable = Auto_Grader_AI.default_combiner
+        self._REPLICATE_TOKEN = SecureParsing.safe_logger()
 
     def override_combiner(self, combiner: callable) -> None:
         self._combiner = combiner
@@ -28,7 +29,7 @@ class Auto_Grader_AI:
         submission: str,
         max_new_tokens: int = 250
     ) -> str:
-        set_environ(SecureData.safe_logger())
+        set_environ(self._REPLICATE_TOKEN)
         return ai.generate_response(
             self._combiner(self.question, submission, self.rubric),
             max_new_tokens=max_new_tokens
