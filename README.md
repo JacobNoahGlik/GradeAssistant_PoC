@@ -3,7 +3,7 @@ Use AI to grade open-response questions on a Google Forms Quiz or Application
 
 Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
 
-###### Please note this readme's [Possible Considerations for Enterprise Use section](#Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. This is a Proof of Concept and with that in mind: we have taken short-cuts that you may wish to remedy before using this codebase directly for enterprise use.
+###### Please note this readme's [Possible Considerations for Enterprise Use section](#Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts that you may wish to fix before using this codebase directly for enterprise use.
 
 ## Usage
 
@@ -54,7 +54,7 @@ _____________________________________________________
 ### 400 Error When Uploading Local CSV to Google Sheets
 ###### Error will look like this:
 ```cmd
-<HttpError 400 when requesting https://sheets.googleapis.com/v4/spreadsheets/1ppM-ieo_sFMIXKejrzGge4hVF4kDONw2yuv5NGdMPQ4:batchUpdate?alt=json returned "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25". Details: "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25">
+<HttpError 400 when requesting https://sheets.googleapis.com/v4/spreadsheets/$Sheet_ID:batchUpdate?alt=json returned "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25". Details: "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25">
 ```
 This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
 
@@ -70,8 +70,16 @@ _____________________________________________________
 
 ## Possible Considerations for Enterprise Use
 1. Security
+   1. ###### Please Note: We do not believe this to be a consideration if you run this code on a local machine in your physical possession. 
+   2. We save your `Replicate` token locally in the `token.vault` file using a basic encryption scheme (see `secureparsing.py` for more info). Every time the token is read, it is re-encrypted based on the time. The time is never saved. If this security scheme breaks your corporation's "secure storage standards" (SSS) you may want to consider other solutions for this part. 
+      1. A possible solution may be writing it to your operating system's environment variables instead of a local file. This may obfuscate the retrieval process and make it difficult to accidentally leak the token.
+      2. Alternatively, if you are running this code on a cloud provider's automation account (AWS, Google Cloud, Microsoft Azure, etc) you may want to look into their secret storage manager (SSM). They do this for you.
+   3. We save your Google `Client ID` and `Client Secret` in an unencrypted json file (`credentials.json`). You may wish to change this depending on your corporation's "secure storage standards" (SSS).
 2. Better AI training
-3. Improving API call speed (Multithreading) 
+   1. *Insert training data*
+3. Improving API call speed (Multithreading)
+   1. While grading each question, our code calls the Replicate API. When calling the API: our code waits for a response before grading the next question. On average: Replicate takes 3 - 5 seconds to reply. Running multiple threads or processes may decrease runtime by 80% - 95% depending on the multithreading scheme.
+   2. A simpler solution may be to run the code at night or over weekends.
 
 <br>
 
