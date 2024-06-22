@@ -100,7 +100,7 @@ class Grader:
         avg_api_call_time: float = 3.41
         projected_time: int = total_iter * avg_api_call_time
         for question in self.Gradeable_questions:
-            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
+            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
             ai = Auto_Grader_AI(self.Rubric.rubric_by_question(question), question)
             for (responseId, response) in self.Submissions.responses_by_header(question): # this for-loop should be replaced with multithreading
                 ai_grade, ai_reasoning = ai.grade_splitter(response) # this takes about 3.5 seconds per api-call
@@ -109,7 +109,7 @@ class Grader:
                 std_out += f'{name},{to_csv_safe(question)},{to_csv_safe(response)},{value_to_score(score)},{to_csv_safe(ai_reasoning)}\n'
                 counter += 1
                 self._add_grade(name, score)
-                print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})', end='\r')
+                print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
         print('')
         try_again: bool = True
         while try_again:

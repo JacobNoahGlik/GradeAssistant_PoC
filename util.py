@@ -132,12 +132,24 @@ def comma_swap(s: str) -> str:
     return s.replace(',', Presets.COMMA_PLACEHOLDER)
 
 
-def time_formater(seconds: float) -> str:
-    hours: int = math.floor(seconds / 3600)
-    seconds -= hours * 3600
-    minutes: int = math.floor(seconds / 60)
-    seconds -= minutes * 60
-    return f'{hours}:{minutes}:{seconds}'
+def time_formater(secs: float) -> str:
+    hours: int = math.floor(secs / 3600)
+    secs -= hours * 3600
+    minutes: int = math.floor(secs / 60)
+    secs -= minutes * 60
+    seconds: int = int(secs)
+    ms: str = f'{round(secs - seconds, 3)}'[2:]
+    ms = ms + '0' * (3 - len(ms))
+    h: str = f'{hours}'
+    if hours < 10:
+        h = '0' + h
+    m: str = f'{minutes}'
+    if minutes < 10:
+        m = '0' + m
+    s: str = f'{seconds}'
+    if seconds < 10:
+        s = '0' + s
+    return f'{h}:{m}:{s}.{ms}'
 
 
 def update_presets(presets_file: str, find: str, replace: str):
