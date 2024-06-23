@@ -3,7 +3,7 @@ Use AI to grade open-response questions on a Google Forms Quiz or Application
 
 Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
 
-###### Please note this readme's [Possible Considerations for Enterprise Use section](#Chapter-3:-Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts that you may wish to fix before using this codebase directly for enterprise use.
+###### Please note this readme's [Possible Considerations for Enterprise Use section](#Chapter-3:-Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts you may wish to fix before using this codebase directly for enterprise use.
 
 <br>
 
@@ -344,7 +344,7 @@ _____________________________________________________
 ### Default Locations
 ###### NOTE: These default locations can be changed in the `presets.py` file or by running `python3 update.py --show-all`
 
-1. `Submissions.csv` is a file representing submissions downloaded from your Google Form. If the data does not look correct try updating your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
+1. `submissions.csv` is a file representing submissions downloaded from your Google Form. If the data does not look correct try updating your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
     1. By default, it's located in your `output` folder (`./output/submissions.csv`).
     2. To change go to `Presets.SUBMISSIONS_LOCATION` (type: `string`)
     3. To change you can alternatively run `python3 update.py --show-all`
@@ -378,6 +378,14 @@ _____________________________________________________
 ## Expected Google Output Files
 ###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
 
+The Google Spreadsheet is based on the value of `Presets.GOOGLE_SPREADSHEET_ID`. The authenticating user **must** have "edit permissions." To update or change the value simply run `python3 update.py`, select "update_sheet", and enter the Google Spreadsheet URL.
+
+Below are the three new tabs that the script will upload during runtime.
+
+1. `Responses` contains the responses collected from the Google Form. This is an exact copy of the local `submissions.csv` file with correct formatting (commas where they should be).
+2. `AI Grades` contains the grades collected from grading the responses of the Google Form. This is an exact copy of the local `graded_submissions.csv` file with correct formatting (commas where they should be).
+3. `Student Gradebook` contains applicant grade averages and other metrics. This is an exact copy of the local `gradebook_report.csv` file with correct formatting (commas where they should be).
+
 <br>
 
 _____________________________________________________
@@ -394,6 +402,56 @@ _____________________________________________________
 
 ## What Do The Columns Mean?
 ###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+
+### Responses tab/sheet
+1. `responseId`
+   1. Created by Google to enable multiple responses by the same user. This is turned off by default but each response has an ID anyway.
+2. `createTime`
+   1. The time at which the user started their response.
+3. `lastSubmittedTime`
+   1. The most recent submission time (if multiple edits are allowed).
+4. rest
+   1. Every following column header is a question from the Google Form in order. (Name, email, phone number, question1, question2, ...)
+
+### AI Grades tab/sheet
+1. `Name`
+   1. The name of the user. To change this column (if the Google Form uses "Full Name", or a different case, etc: change the value directly in `Presets.GOOGLE_FORM_USER_IDENTIFIER`).
+2. `Question`
+   1. The question the applicant is answering for which the rubric was found.
+3. `Response`
+   1. The user's response to that question.
+4. `AI Grade`
+   1. A score from 0-9 (min=0, max=9). 
+5. `AI Reasoning`
+   1. The reasoning as to why the AI chose this score.
+
+### Student Gradebook tab/sheet
+1. `Name`
+   1. The name of the user. To change this column (if the Google Form uses "Full Name", or a different case, etc: change the value directly in `Presets.GOOGLE_FORM_USER_IDENTIFIER`).
+2. `email`
+   1. The email the user gave in the Google Form.
+3. `phone number`
+   1. The phone number the user gave in the Google Form.
+4. `AI Letter Grade`
+   1. A letter grade derived from the percentage. (A ≥ 0.9, B ≥ 0.8, C ≥ 0.7, D ≥ 0.6, else: F)
+5. `AI Percentage`
+   1. A percentage scored by averaging the applicant's grades. We recommend formatting this column as `number > percentage` in Google Sheets.
+6. `Avg AI Score`
+   1. Average score the AI gave to each response for this user. (min=0, max=9)
+7. `Volatility`
+   1. The consistency of the AI's grades for this user. `0.0` means the AI gave all the same scores while `1.0` means the AI gave equal number of highest possible scores to lowest possible scores.
+   2. `[0, 0, 0, 0]` `->` `Volatility` `=` `0.0`
+   3. `[9, 9, 9, 9]` `->` `Volatility` `=` `0.0`
+   4. `[0, 9, 0, 9]` `->` `Volatility` `=` `1.0`
+8. `Classification`
+   1. Volatility score classified:
+      1. `Volatility` `<` `0.15` `->` Classification: `Very Consistent`
+      2. `Volatility` `<` `0.32` `->` Classification: `Consistent`
+      3. `Volatility` `<` `0.55` `->` Classification: `Somewhat Inconsistent`
+      4. `Volatility` `<` `0.70` `->` Classification: `Very Inconsistent`
+      4. `Volatility` `>` `0.70` `->` Classification: `HIGHLY VOLATILE`
+9. `Scores`
+   1. A list of all scores scored by the AI.
 
 <br>
 
