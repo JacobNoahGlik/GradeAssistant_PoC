@@ -137,16 +137,16 @@ _____________________________________________________
 <br>
 
 ##  Possible Considerations for Enterprise Use
-1. Security
+1. ### Security
    1. ###### Please Note: We do not believe this to be a consideration if you run this code on a local machine in your physical possession. 
    2. We save your `Replicate` token locally in the `token.vault` file using a strong encryption scheme (see `secureparsing.py` for more info). Every time the token is read, it is re-encrypted based on the time. The time is never saved. If this security scheme breaks your corporation's "secure storage standards" (SSS) you may want to consider other solutions for this part. 
       1. A possible solution may be writing it to your operating system's environment variables instead of a local file. This may obfuscate the retrieval process and make it difficult to accidentally leak the token.
       2. Alternatively, if you are running this code on a cloud provider's automation account (AWS, Google Cloud, Microsoft Azure, etc) you may want to look into their secret storage manager (SSM). They do this for you.
    3. We save your Google `Client ID` and `Client Secret` in an unencrypted json file (`credentials.json`). You may wish to change this depending on your corporation's "secure storage standards" (SSS).
    4. The Google OAuth 2.0 token is saved locally in `json` form during runtime. It is never deleted after code execution. In theory, an attacker could leverage this old token to generate a new one, but it is unlikely and reduces the general load if saved like we have it set up to be. The most viable mitigation tactic would be to remove the file after runtime if you do not project the use of this code for longer then an hour.
-2. Better AI training
+2. ### Better AI training
    1. We send all data (background, rubric, question, submission) in one single message. This can open up the system to malicious prompt engineering attacks and may reduce the quality of responses from the AI. A potential mitigation/improvement would be training the AI with the background, sending the rubric and question in separate messages, and sending the submission in a final message for grading.
-3. Improving API call speed (Multithreading)
+3. ### Improving API call speed (Multithreading)
    1. While grading each question, our code calls the Replicate API. When calling the API: our code waits for a response before grading the next question. On average: Replicate takes 3 - 5 seconds to reply. Running multiple threads or processes may decrease runtime by 80% - 95% depending on the multithreading scheme.
    2. A simpler solution may be to run the code at night or over weekends.
 
