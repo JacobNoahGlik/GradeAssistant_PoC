@@ -237,7 +237,7 @@ _________________________
 ## OAuth consent screen
 ###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
 
-[Navigate to Google's OAuth Consent Screen's website](https://console.cloud.google.com/apis/credentials/consent)
+<a href="https://console.cloud.google.com/apis/credentials/consent" target="_blank">Navigate to Google's OAuth Consent Screen's website</a>
 
 **Make sure the correct Google Project is selected in the top left!**
 
