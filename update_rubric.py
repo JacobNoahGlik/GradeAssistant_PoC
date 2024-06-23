@@ -1,6 +1,5 @@
 from GoogleStructures import GoogleUtils
 from presets import Presets
-from util import InvalidUsageError
 import sys
 
 
@@ -33,11 +32,6 @@ class RubricChanges:
         if len(sys.argv) != 3:
             return input('> Enter rubric filename: ')
         return sys.argv[2]
-
-
-
-if __name__ != '__main__':
-    raise InvalidUsageError('This file should be run and should not be used as an import module.')
 
 
 

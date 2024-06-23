@@ -1,8 +1,9 @@
 import warnings
 import getpass
 import os
+import csv
 import math
-from presets import Presets
+from presets import Presets, InvalidUsageError
 
 
 
@@ -111,7 +112,7 @@ def calc_volatility(scores: list[int], min: int, max: int, rounding: int = 2) ->
     variance = sum((x - mean) ** 2 for x in scores) / len(scores)
     std_dev = math.sqrt(variance)
     max_std_dev = (max - min) / 2
-    volatility = (std_dev / max_std_dev) * 100
+    volatility = (std_dev / max_std_dev)
     return round(volatility, rounding)
 
 
@@ -177,11 +178,6 @@ identity = lambda x: x
 
 
 
-class InvalidUsageError(Exception):
-    pass
-
-
-
 class Counter:
     def __init__(self, file: str = 'counter.txt'):
         self.file: str = file
@@ -210,6 +206,56 @@ class Counter:
     def _update(self) -> None:
         with open(self.file, 'w') as f:
             f.write(f'{self.count}')
+
+
+
+class CSVFile:
+    @staticmethod
+    def reorder(file_name: str, column_number: int, err_msg: bool = False) -> bool:
+        max_col: int = 0
+        try:
+            with open(file_name, 'r') as file:
+                reader = csv.reader(file)
+                data = list(reader)
+                header = data[0]
+                body = data[1:]
+                max_col = len(header)
+                if max_col < column_number or 0 > column_number:
+                    raise IndexError()
+                body.sort(key=lambda x: x[column_number])
+                data = [header] + body
+            
+            with open(file_name, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerows(data)
+            return True
+        
+        except FileNotFoundError:
+            if err_msg: print(f"File {file_name} not found.")
+            return False
+        except IndexError:
+            if err_msg: print(f'Column {column_number} not found in file "{file_name}". Min=0, Max={max_col}')
+            return False
+        except Exception as e:
+            if err_msg: print(f"An error occurred: {e}")
+            return False
+        
+    @staticmethod
+    def reorder_by_header(file_name: str, header_name: str, err_msg: bool = False) -> bool:
+        try:
+            with open(file_name, 'r') as file:
+                reader = csv.reader(file)
+                data: list = list(reader)
+                header: str = data[0]
+                if header_name not in header:
+                    raise Exception(f'Header not found in file "{file_name}". Headers={header}')
+                return CSVFile.reorder(file_name, header.index(header_name), err_msg=err_msg)
+        except FileNotFoundError:
+            if err_msg: print(f"File {file_name} not found.")
+            return False
+        except Exception as e:
+            if err_msg: print(f"An error occurred: {e.__repr__()}")
+            return False
 
 
 

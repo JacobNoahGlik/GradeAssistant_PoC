@@ -1,13 +1,13 @@
-import base64
-import hashlib
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+import base64
+import hashlib
 import random
 import secrets
 import time
 import os
-from util import InvalidUsageError
+from presets import InvalidUsageError
 
 
 
@@ -145,6 +145,16 @@ class SecureParsing:
         idx, secret = stream.split(':', 1)
         return SecureParsing.update_password(
             Obfuscator.decr(secret, int(Obfuscator.decr(idx, 2))))
+
+
+
+class ReplicateTokenNotSetError(Exception):
+    pass
+
+
+
+if not os.path.exists('token.vault'):
+    raise ReplicateTokenNotSetError('Could not find "token.vault" file. Update your replicate token by running "python3 update.py --show-all"')
 
 
 
