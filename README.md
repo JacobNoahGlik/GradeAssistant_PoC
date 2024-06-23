@@ -20,8 +20,8 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
 - Common Errors ([link](#Common-Errors))
 
 ### **Next Chapters:**
-- Chapter 2: Expected Output ([link](#Chapter-2:-Expected-Output))
-- Chapter 3: Possible Considerations for Enterprise Use ([link](#Chapter-3--Possible-Considerations-for-Enterprise-Use))
+- Chapter 2: Expected Output ([link](#Chapter-2-Expected-Output))
+- Chapter 3: Possible Considerations for Enterprise Use ([link](#Chapter-3-Possible-Considerations-for-Enterprise-Use))
 
 <br>
 
