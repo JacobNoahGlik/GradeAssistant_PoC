@@ -28,6 +28,10 @@ _____________________________________________________
 
 <br>
 
+<br>
+
+<br>
+
 ## Run the Code
 1. Update your credentials to use this code. (step-by-step walkthrough found [here](#Update-Your-Credentials))
 2. Set up your environment. (step-by-step walkthrough found [here](#Setting-Up-Your-Environment))
@@ -36,6 +40,10 @@ _____________________________________________________
 <br>
 
 _____________________________________________________
+
+<br>
+
+<br>
 
 <br>
 
@@ -54,6 +62,10 @@ In a Linux shell/terminal: follow the lines in the `update.bash` file:
 <br>
 
 _____________________________________________________
+
+<br>
+
+<br>
 
 <br>
 
@@ -90,11 +102,19 @@ _____________________________________________________
 
 <br>
 
+<br>
+
+<br>
+
 # Expected Output
 
 <br>
 
 _____________________________________________________
+
+<br>
+
+<br>
 
 <br>
 
@@ -111,6 +131,10 @@ _____________________________________________________
 <br>
 
 _____________________________________________________
+
+<br>
+
+<br>
 
 <br>
 
@@ -135,6 +159,10 @@ _____________________________________________________
 <br>
 
 _____________________________________________________
+
+<br>
+
+<br>
 
 <br>
 
@@ -188,6 +216,12 @@ _________________________
 
 <br>
 
+<br>
+
+<br>
+
+<br>
+
 ## Startup Endpoints
 
 To learn about setting up your endpoints for Google Sheets and Google Forms look at their "Python quickstart guides." ([Python quickstart | Google Sheets link](https://developers.google.com/sheets/api/quickstart/python), [Python quickstart | Google Forms link](https://developers.google.com/forms/api/quickstart/python))
@@ -202,6 +236,12 @@ The short version is a 3-step process for both.
 <br>
 
 _________________________
+
+<br>
+
+<br>
+
+<br>
 
 <br>
 
@@ -231,6 +271,12 @@ _________________________
 
 <br>
 
+<br>
+
+<br>
+
+<br>
+
 ## OAuth consent screen
 
 [Navigate to Google's OAuth Consent Screen's website](https://console.cloud.google.com/apis/credentials/consent)
@@ -240,7 +286,6 @@ _________________________
 Click on External and hit the blue `CREATE` button.
 
 ![image](readme_images/OAuthConcentScreen.png)
-
 
 <br>
 
@@ -256,7 +301,6 @@ Enter your email again into the "Email Address" text-entry box with the subtext:
 **Leave everything else blank.**
 
 ✔️ Select the `Save and Continue` button at the bottom of the page, **leaving everything else blank**.
-
 
 <br>
 
@@ -286,7 +330,6 @@ Note: *if these rows are missing, you may need to enable these endpoints for you
 
 ✔️ Select the `SAVE AND CONTINUE` button at the bottom of the page.
 
-
 <br>
 
 <br>
@@ -298,7 +341,6 @@ Click the `+ ADD USERS` button.
 Add the Gmail account that owns the Google Form OR has viewing access to the Google Form's results.
 
 ✔️ Scroll to the bottom and select the `SAVE AND CONTINUE` button.
-
 
 <br>
 
@@ -317,5 +359,7 @@ Here you will find a summary of the previous selections.
 👏 Congradulations 🎉🎊
 
 You have completed the OAuth Consent Screen and **PASSED**!
+
+<br>
 
 <br>
