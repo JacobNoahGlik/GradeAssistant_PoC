@@ -439,7 +439,7 @@ _____________________________________________________
 6. `Avg AI Score`
    1. Average score the AI gave to each response for this user. (min=0, max=9)
 7. `Volatility`
-   1. The consistency of the AI's grades for this user. `0.0` means the AI gave all the same scores while `1.0` means the AI gave equal number of highest possible scores to lowest possible scores.
+   1. The consistency of the AI's grades for this user. `0.0` means the AI gave all the same scores while `1.0` means the AI gave an equal number of highest possible scores to the lowest possible scores.
    2. `[0, 0, 0, 0]` `->` `Volatility` `=` `0.0`
    3. `[9, 9, 9, 9]` `->` `Volatility` `=` `0.0`
    4. `[0, 9, 0, 9]` `->` `Volatility` `=` `1.0`
