@@ -3,7 +3,7 @@ Use AI to grade open-response questions on a Google Forms Quiz or Application
 
 Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
 
-###### Please note this readme's [Possible Considerations for Enterprise Use section](#Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts that you may wish to fix before using this codebase directly for enterprise use.
+###### Please note this readme's [Possible Considerations for Enterprise Use section](#Chapter-3:-Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts that you may wish to fix before using this codebase directly for enterprise use.
 
 <br>
 
@@ -20,8 +20,8 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
 - Common Errors ([link](#Common-Errors))
 
 ### **Next Chapters:**
-- Chapter 2: Expected Output ([link](#Expected-Output))
-- Chapter 3: Possible Considerations for Enterprise Use ([link](#Possible-Considerations-for-Enterprise-Use))
+- Chapter 2: Expected Output ([link](#Chapter-2:-Expected-Output))
+- Chapter 3: Possible Considerations for Enterprise Use ([link](#Chapter-3:-Possible-Considerations-for-Enterprise-Use))
 
 <br>
 
@@ -108,7 +108,7 @@ _____________________________________________________
 - What Do The Columns Mean? ([link](#What-Do-The-Columns-Mean?))
 
 ### **Next Chapters:**
-- Chapter 3: Possible Considerations for Enterprise Use ([link](#Possible-Considerations-for-Enterprise-Use))
+- Chapter 3: Possible Considerations for Enterprise Use ([link](Chapter-3:-Possible-Considerations-for-Enterprise-Use))
 
 ### [link to top](#Grade-Assistant-Proof-of-Concept-(PoC))
 
