@@ -16,6 +16,9 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
    - [Setting Up Your Environment](#Setting-Up-Your-Environment)
    - [Common Errors](#Common-Errors)
 - [Expected Output](#Expected-Output)
+   - [Expected Local Output Files](#Expected-Local-Output-Files)
+   - [Expected Google Output Files](#Expected-Google-Output-Files)
+   - [What Do The Columns Mean?](#What-Do-The-Columns-Mean?)
 - [Possible Considerations for Enterprise Use](#Possible-Considerations-for-Enterprise-Use)
 
 <br>
@@ -107,18 +110,6 @@ _____________________________________________________
 <br>
 
 # Expected Output
-
-<br>
-
-_____________________________________________________
-
-<br>
-
-<br>
-
-<br>
-
-<br>
 
 <br>
 
