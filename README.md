@@ -108,9 +108,9 @@ _____________________________________________________
 - What Do The Columns Mean? ([link](#What-Do-The-Columns-Mean?))
 
 ### **Next Chapters:**
-- Chapter 3: Possible Considerations for Enterprise Use ([link](Chapter-3:-Possible-Considerations-for-Enterprise-Use))
+- Chapter 3: Possible Considerations for Enterprise Use ([link](Chapter-3-Possible-Considerations-for-Enterprise-Use))
 
-### [link to top](#Grade-Assistant-Proof-of-Concept-(PoC))
+### [link to top](#Grade-Assistant-Proof-of-Concept-PoC)
 
 <br>
 
