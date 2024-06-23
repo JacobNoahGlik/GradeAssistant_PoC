@@ -10,7 +10,7 @@ from oauth2client import client, file, tools
 from apiclient import discovery
 from httplib2 import Http
 
-from util import get_sheet_values, to_csv_safe, InvalidUsageError
+from util import get_sheet_values, to_csv_safe, InvalidUsageError, Presets
 
 
 
@@ -115,7 +115,6 @@ class GoogleFormsQuestion:
 
 
 class GoogleLoginManager:
-
     def __init__(self):
         self.credentials = None
 
@@ -172,16 +171,23 @@ class GoogleLoginManager:
 
 class GoogleUtils:
     @staticmethod
-    def bulk_csv_to_google_sheets(spreadsheet_id: str, csv_calls: list[tuple[str, str]]):
+    def bulk_csv_to_google_sheets(spreadsheet_id: str, csv_calls: list[tuple[str, str]]) -> bool:
         for csv_filename, google_sheet_name in csv_calls:
-            GoogleUtils.csv_to_google_sheets(csv_filename, google_sheet_name, spreadsheet_id)
+            if not GoogleUtils.csv_to_google_sheets(
+                csv_filename, 
+                google_sheet_name, 
+                spreadsheet_id
+            ):
+                return False
+        return True
 
     @staticmethod
-    def csv_to_google_sheets(csv_filename: str, google_sheet_name: str, spreadsheet_id):
-        SHEET_NAME = google_sheet_name
-        CSV_FILE = csv_filename
-
-        """Converts a CSV file to a Google Sheet."""
+    def csv_to_google_sheets(
+        csv_filename: str, 
+        google_sheet_name: str, 
+        spreadsheet_id, 
+        separator: str = ','
+    ) -> bool:
         creds = GoogleCredentialManager.sheets_login()
         try:
             service = build("sheets", "v4", credentials=creds)
@@ -190,23 +196,23 @@ class GoogleUtils:
             sheet_id = None
             for sheet in sheets:
                 name, id = get_sheet_values(sheet)
-                if name == SHEET_NAME:
+                if name == google_sheet_name:
                     sheet_id = id
                     break
             if sheet_id is None:
-                result = GoogleUtils.create_sheet(service, spreadsheet_id, SHEET_NAME)
+                result = GoogleUtils.create_sheet(service, spreadsheet_id, google_sheet_name)
                 sheet_id = result.get('replies')[0].get('addSheet').get('properties').get('sheetId')
             trying: bool = True
             while trying:
                 try:
-                    with open(CSV_FILE, 'r') as file:
+                    with open(csv_filename, 'r') as file:
                         csv_data = file.read()
                     trying = False
                     break
                 except FileNotFoundError as FNFE:
-                    print(f'Could not find "{CSV_FILE}"')
-                    CSV_FILE = input('Which file should be used instead (enter file or "quit"): ')
-                    if CSV_FILE == 'quit':
+                    print(f'Could not find "{csv_filename}"')
+                    csv_filename = input('Which file should be used instead (enter file or "quit"): ')
+                    if csv_filename == 'quit':
                         exit()
             body = {
                 "requests": [
@@ -222,9 +228,9 @@ class GoogleUtils:
                         "values": [
                             {
                             "userEnteredValue": {
-                                "stringValue": value.replace('<INSERT_COMMA>', ',')
+                                "stringValue": value.replace(Presets.COMMA_PLACEHOLDER, separator)
                             }
-                            } for value in row.split(",")
+                            } for value in row.split(separator)
                         ]
                         }  for row in csv_data.split("\n")
                     ],
@@ -239,6 +245,47 @@ class GoogleUtils:
             ).execute()
         except HttpError as err:
             print(err)
+            return False
+        return True
+
+    @staticmethod
+    def google_sheets_to_csv(
+        spreadsheet_id: str, 
+        google_sheet_name: str, 
+        csv_filename: str, 
+        separator: str = ','
+    ) -> bool:
+        creds = GoogleCredentialManager.sheets_login()
+        try:
+            service = build("sheets", "v4", credentials=creds)
+            sheet_metadata = service.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+            sheets = sheet_metadata.get('sheets', '')
+            sheet_id = None
+            for sheet in sheets:
+                name, id = get_sheet_values(sheet)
+                if name == google_sheet_name:
+                    sheet_id = id
+                    break
+            if sheet_id is None:
+                print(f'Sheet "{google_sheet_name}" not found.')
+                return False
+            result = service.spreadsheets().values().get(
+                spreadsheetId=spreadsheet_id, range=google_sheet_name
+            ).execute()
+            values = result.get('values', [])
+            if not values:
+                print('No data found.')
+                return False
+            with open(csv_filename, 'w', newline='') as file:
+                for row in values:
+                    row = [
+                        str(cell).replace(separator, Presets.COMMA_PLACEHOLDER) for cell in row
+                    ]
+                    file.write(separator.join(row) + '\n')
+            return True
+        except HttpError as err:
+            print(err)
+            return False
 
     @staticmethod
     def create_sheet(service, spreadsheet_id, sheet_name):
