@@ -16,7 +16,8 @@ private_facing_functions: list[str] = [
     '_update_graded_submissions_location',
     '_update_gradebook report_location',
     '_update_submissions_location',
-    '_update_rubric_location'
+    '_update_rubric_location',
+    '_update_user_identifier'
 ]
 
 
@@ -46,6 +47,7 @@ def run_choice(choice: str) -> bool:
     selections: list[tuple[str, str, str]] = [
         ('update_form',                         '    GOOGLE_FORM_ID',              "Enter the URL of the Google Form: ", id_strip),
         ('update_sheet',                        '    GOOGLE_SPREADSHEET_ID',       "Enter the URL of the Google Spreadsheet: ", id_strip),
+        ('_update_user_identifier',             '    GOOGLE_FORM_USER_IDENTIFIER', "Enter the title of the question on the google form that asks for a users name (default: 'Name'): "),
         ('_update_comma_placeholder',           '    COMMA_PLACEHOLDER',           "Enter comma placeholder: ", identity),
         ('_update_graded_submissions_location', '    GRADED_SUBMISSIONS_LOCATION', "Enter new graded-submissions location: ", identity),
         ('_update_gradebook_report_location',   '    GRADED_SUBMISSIONS_LOCATION', "Enter new graded-submissions-report location: ", identity),

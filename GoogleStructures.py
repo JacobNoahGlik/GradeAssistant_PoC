@@ -1,6 +1,5 @@
 import csv
 import os.path
-
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -9,8 +8,8 @@ from googleapiclient.errors import HttpError
 from oauth2client import client, file, tools
 from apiclient import discovery
 from httplib2 import Http
-
-from util import get_sheet_values, to_csv_safe, InvalidUsageError, Presets
+from util import get_sheet_values, to_csv_safe
+from presets import InvalidUsageError, Presets
 
 
 
@@ -21,9 +20,12 @@ class SubmissionTable:
             'createTime',
             'lastSubmittedTime'
         ]
-        self.default_name_col: int = 4
+        # self.default_name_col: int = 3
+        self.name_col: int = 3
         for question in questions:
             self.header.append(to_csv_safe(question.text))
+        if Presets.GOOGLE_FORM_USER_IDENTIFIER in self.header:
+            self.name_col = self.header.index(Presets.GOOGLE_FORM_USER_IDENTIFIER)
         self._questions = questions
         self._id_to_q = {q.id: q.text for q in questions}
         self.submissions: dict[str, list] = {}
@@ -40,16 +42,7 @@ class SubmissionTable:
         return self.header[3:]
 
     def user_lookup(self, responseId: str) -> str:
-        candidate = self._find_name_index()
-        if candidate == -1:
-            return self.submissions[responseId][self.default_name_col]
-        return self.submissions[responseId][candidate]
-    
-    def _find_name_index(self) -> int:
-        for i, question in enumerate(self.get_questions()):
-            if question.lower() in ['name', 'enter your name', 'first name', 'last name']:
-                return i + 3
-        return -1
+        return self.submissions[responseId][self.name_col]
 
     def add_submission(self, submission):
         temp: list = [submission['responseId'], submission['createTime'], submission['lastSubmittedTime']] + ([''] * (len(self.header) - 3))
@@ -59,7 +52,7 @@ class SubmissionTable:
                 raise Exception(f'Could not find Question({question_text}) in table({self.header})')
             temp[self.header.index(question_text)] = answer['textAnswers']['answers'][0]['value'].replace('“', '"').replace('”', '"').replace('’', "'").replace(',', '<INSERT_COMMA>')
         self.submissions[submission['responseId']] = temp
-        self._name_lookup[temp[3]] = (temp[4], temp[5])
+        self._name_lookup[temp[self.name_col]] = (temp[4], temp[5])
 
     def bulk_add_submissions(self, submissions: list):
         for submission in submissions:
@@ -117,6 +110,13 @@ class GoogleFormsQuestion:
 class GoogleLoginManager:
     def __init__(self):
         self.credentials = None
+        self._on_startup()
+
+    def _on_startup(self):
+        if os.path.exists('token.json'):
+            print(
+                'WARNING: "token.json" already exists. This may allow attackers to access your account if they get access to this file.'
+            )
 
     def has_expired(self) -> bool:
         return not self.credentials
@@ -228,7 +228,7 @@ class GoogleUtils:
                         "values": [
                             {
                             "userEnteredValue": {
-                                "stringValue": value.replace(Presets.COMMA_PLACEHOLDER, separator)
+                                "stringValue": str(value.replace(Presets.COMMA_PLACEHOLDER, separator))
                             }
                             } for value in row.split(separator)
                         ]

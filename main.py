@@ -15,7 +15,8 @@ if __name__ == '__main__':
     grader = Grader(Presets.RUBRIC_LOCATION, table)
     gradebook_report: str = grader.run_grading_routine(
         Presets.GRADED_SUBMISSIONS_LOCATION,
-        Presets.GRADEBOOK_REPORT_LOCATION
+        Presets.GRADEBOOK_REPORT_LOCATION,
+        order_by='Name'  # CASE SENSITIVE
     )
 
     GoogleUtils.bulk_csv_to_google_sheets(
