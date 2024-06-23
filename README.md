@@ -20,6 +20,9 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
    - [Expected Google Output Files](#Expected-Google-Output-Files)
    - [What Do The Columns Mean?](#What-Do-The-Columns-Mean?)
 - [Possible Considerations for Enterprise Use](#Possible-Considerations-for-Enterprise-Use)
+   - [Security](#Security)
+   - [Better AI training](#Better-AI-training)
+   - [Improving API call speed (Multithreading)](#Improving-API-call-speed-Multithreading)
 
 <br>
 
