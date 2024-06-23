@@ -5,8 +5,35 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
 
 ###### Please note this readme's [Possible Considerations for Enterprise Use section](#Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts that you may wish to fix before using this codebase directly for enterprise use.
 
-## Usage
+<br>
 
+# Chapter 1: Usage
+
+<br>
+
+## Usage: Table Of Contents
+
+### **Contains:**
+
+- Run the Code ([link](#Run-the-Code))
+- Setting Up Your Environment ([link](#Setting-Up-Your-Environment))
+- Common Errors ([link](#Common-Errors))
+
+### **Next Chapters:**
+- Chapter 2: Expected Output ([link](#Expected-Output))
+- Chapter 3: Possible Considerations for Enterprise Use ([link](#Possible-Considerations-for-Enterprise-Use))
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+## Run the Code
 1. Update your credentials to use this code. (step-by-step walkthrough found [here](#Update-Your-Credentials))
 2. Set up your environment. (step-by-step walkthrough found [here](#Setting-Up-Your-Environment))
 3. Run `python3 main.py` in a python-equipped terminal.
@@ -68,7 +95,50 @@ _____________________________________________________
 
 <br>
 
-## Possible Considerations for Enterprise Use
+# Chapter 2: Expected Output
+
+<br>
+
+## Expected Output: Table Of Contents
+
+### **Contains:**
+
+- Expected Local Output Files ([link](#Expected-Local-Output-Files))
+- Expected Google Output Files ([link](#Expected-Google-Output-Files))
+- What Do The Columns Mean? ([link](#What-Do-The-Columns-Mean?))
+
+### **Next Chapters:**
+- Chapter 3: Possible Considerations for Enterprise Use ([link](#Possible-Considerations-for-Enterprise-Use))
+
+### [link to top](#Grade-Assistant-Proof-of-Concept-(PoC))
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+## Expected Local Output Files
+
+## Expected Google Output Files
+
+## What Do The Columns Mean?
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+# Chapter 3: Possible Considerations for Enterprise Use
 1. Security
    1. ###### Please Note: We do not believe this to be a consideration if you run this code on a local machine in your physical possession. 
    2. We save your `Replicate` token locally in the `token.vault` file using a strong encryption scheme (see `secureparsing.py` for more info). Every time the token is read, it is re-encrypted based on the time. The time is never saved. If this security scheme breaks your corporation's "secure storage standards" (SSS) you may want to consider other solutions for this part. 
