@@ -1,7 +1,11 @@
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
-from util import safe_write, to_csv_safe, InvalidUsageError, classification, calc_volatility, value_to_score, comma_swap, time_formater
-from presets import Presets
+from util import CSVFile, Presets, classification, calc_volatility, value_to_score, comma_swap, time_formater, to_csv_safe
+from presets import InvalidUsageError, Presets
+import os
+from update_rubric import RubricChanges
+
+
 
 class RubricTable:
     def __init__(self, filename: str):
@@ -19,7 +23,16 @@ class RubricTable:
                 s += f'\t > {k2}: "{v2}"\n'
         return s
     
+    def _validate_rubric_file(self):
+        if not os.path.exists(self.filename):
+            print(f'\n > Could not find file: "{self.filename}"')
+            if input('Download rubric from google spreadsheet (y/n): ').lower() in ['y', 'yes', 'yeah']:
+                RubricChanges.download()
+            else:
+                raise InvalidUsageError(f'Could not find file: "{self.filename}"')
+        
     def _load_rubric_table(self) -> None:
+        self._validate_rubric_file()
         with open(self.filename, "r") as table:
             lines = table.read().split('\n')
         self._cols = [
@@ -93,29 +106,30 @@ class Grader:
             counter += len(self.Submissions.responses_by_header(question))
         return counter
 
-    def grade_submissions(self, file_out: str) -> None:
-        std_out: str = 'Name,Question,Response,AI Grade,AI Reasoning\n'
+    def grade_submissions(self, file_out: str, order_by: str = 'Name') -> None:
+        std_out: str = f'{Presets.GOOGLE_FORM_USER_IDENTIFIER},Question,Response,AI Grade,AI Reasoning\n'
         total_iter: int = self._get_total_iter()
         counter: int = 0
         avg_api_call_time: float = 3.41
         projected_time: int = total_iter * avg_api_call_time
         for question in self.Gradeable_questions:
-            print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
+            print(f'AI has graded {counter} out of {total_iter} submissions. ({round(counter/total_iter*100,1)}% complete, projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
             ai = Auto_Grader_AI(self.Rubric.rubric_by_question(question), question)
             for (responseId, response) in self.Submissions.responses_by_header(question): # this for-loop should be replaced with multithreading
-                ai_grade, ai_reasoning = ai.grade_splitter(response) # this takes about 3.5 seconds per api-call
+                ai_grade, ai_reasoning = ai.safe_grade_splitter(response)  # this takes about 3.5 seconds per api-call
                 score: int = self._num(ai_grade)
                 name = to_csv_safe(self.Submissions.user_lookup(responseId))
                 std_out += f'{name},{to_csv_safe(question)},{to_csv_safe(response)},{value_to_score(score)},{to_csv_safe(ai_reasoning)}\n'
                 counter += 1
                 self._add_grade(name, score)
-                print(f'AI has graded {counter} out of {total_iter} submissions. (Projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
+                print(f'AI has graded {counter} out of {total_iter} submissions. ({round(counter/total_iter*100,1)}% complete, projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
         print('')
         try_again: bool = True
         while try_again:
             try:
                 with open(file_out, 'w') as graded:
                     graded.write(std_out)
+                CSVFile.reorder_by_header(file_out, order_by)
                 print('\n> Wrote grades to file successfully!\n')
                 return
             except PermissionError as e:
@@ -140,13 +154,14 @@ class Grader:
     def run_grading_routine(
             self, 
             graded_submissions_file: str, 
-            gradebook_report_file: str
+            gradebook_report_file: str,
+            order_by: str = 'Name'  # CASE SENSITIVE
         ) -> str:
-        self.grade_submissions(graded_submissions_file)
-        return self._gredebook_report(gradebook_report_file)
+        self.grade_submissions(graded_submissions_file, order_by=order_by)
+        return self._gredebook_report(gradebook_report_file, order_by=order_by)
 
-    def _gredebook_report(self, path: str) -> str:
-        header: str = ['Name', 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
+    def _gredebook_report(self, path: str, order_by: str = 'Name') -> str:
+        header: str = [Presets.GOOGLE_FORM_USER_IDENTIFIER, 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
         csv_str: str = ','.join(header) + '\n'
         for user in self.Gradebook.keys():
             grades: list = self.Gradebook[user]
@@ -168,6 +183,7 @@ class Grader:
             ) + '\n'
         with open(path, 'w') as f:
             f.write(csv_str)
+        CSVFile.reorder_by_header(path, order_by)
 
     def _letter_grade(self, number: int, times: int) -> tuple[str, float]:
         grade: float = number / (times * 9)
