@@ -335,15 +335,65 @@ _____________________________________________________
 <br>
 
 # Expected Output
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
 
 <br>
 
 ## Expected Local Output Files
+###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+
+### Default Locations
+###### NOTE: These default locations can be changed in the `presets.py` file or by running `python3 update.py --show-all`
+
+1. `Submissions.csv` is a file representing submissions downloaded from your Google Form. If the data does not look correct try updating your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
+    1. By default, it's located in your `output` folder (`./output/submissions.csv`).
+    2. To change go to `Presets.SUBMISSIONS_LOCATION` (type: `string`)
+    3. To change you can alternatively run `python3 update.py --show-all`
+2. `graded_submissions.csv` is a file representing questions that have been graded (ordered by `applicant name`). This file will be uploaded to your Google Spreadsheet in the `AI Grades` tab/sheet.
+    1. By default, it's located in your `output` folder (`./output/graded_submissions.csv`).
+    2. To change go to `Presets.GRADED_SUBMISSIONS_LOCATION` (type: `string`)
+    3. To change you can alternatively run `python3 update.py --show-all`
+3. `gradebook_report.csv` is a file representing the average grades applicants received on questions that have been graded (ordered by `applicant name`). This file will be uploaded to your Google Spreadsheet in the `Student Gradebook` tab/sheet.
+    1. By default, it's located in your `output` folder (`./output/gradebook_report.csv`).
+    2. To change go to `Presets.GRADEBOOK_REPORT_LOCATION` (type: `string`)
+    3. To change you can alternatively run `python3 update.py --show-all`
+4. `rubric.csv` is a file representing the rubric AI uses to grade questions. This file can be found in your Google Spreadsheet in the `Rubruc` tab/sheet. If the file does not exist locally before you run the program, it will automatically download the file from the Google Spreadsheet. If the tab/sheet in your Google Spreadsheet titled `"Rubruc"` does not exist it may cause an issue for the program.
+    1. By default, it's located in your current folder (`./rubric.csv`).
+    2. To change go to `Presets.RUBRIC_LOCATION` (type: `string`)
+    3. To change you can alternatively run `python3 update.py --show-all`
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
 
 ## Expected Google Output Files
+###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
 
 ## What Do The Columns Mean?
+###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
 
 <br>
 
