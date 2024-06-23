@@ -21,7 +21,7 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
 
 ### **Next Chapters:**
 - Chapter 2: Expected Output ([link](#Chapter-2:-Expected-Output))
-- Chapter 3: Possible Considerations for Enterprise Use ([link](#Chapter-3:-Possible-Considerations-for-Enterprise-Use))
+- Chapter 3: Possible Considerations for Enterprise Use ([link](#Chapter-3--Possible-Considerations-for-Enterprise-Use))
 
 <br>
 
