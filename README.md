@@ -58,7 +58,7 @@ This is a Proof of Concept (PoC) for automating the grading of open-response ans
 2. Integrate with Google Forms to fetch submissions.
 3. Upload grades to Google Sheets.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -76,7 +76,7 @@ This is a Proof of Concept (PoC) for automating the grading of open-response ans
 - AI training
 - Security considerations for enterprise use
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -92,7 +92,7 @@ This readme provides step-by-step instructions on:
 
 This repo can serve as a valuable resource for those looking to automate grading processes, integrate with Google Forms and Sheets, or learn about OAuth token setup and API credential configuration.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -118,7 +118,7 @@ _____________________________________________________
 2. Set up your environment. (step-by-step walkthrough found [here](#Setting-Up-Your-Environment))
 3. Run `python3 main.py` in a python-equipped terminal.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -142,7 +142,7 @@ In a Linux shell/terminal: follow the lines in the `update.bash` file:
 3. `pip install getpass`
 4. `pip install replicate`
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -177,7 +177,7 @@ _____________________________________________________
 ```
 This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -231,7 +231,7 @@ _____________________________________________________
       3. `Google_Sheet_URL` (make sure to replace `Google_Sheet_URL` with the URL of your Google sheet **ONLY IF** *you did not add the optional URL in the first step*)
          1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -258,7 +258,7 @@ The short version is a 3-step process for both.
 2. Configure the OAuth consent screen (step-by-step guide in the [OAuth consent screen section](#OAuth-consent-screen))
 3. Authorize credentials for a desktop application (step-by-step guide in the [Getting an OAuth Token section](#Getting-an-OAuth-Token))
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -290,7 +290,7 @@ Click the blue `CREATE` button at the bottom of the page.
 
 A pop-up window will appear with your `client-ID` and `client-secret`. Save both somewhere secure.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -389,7 +389,7 @@ Here you will find a summary of the previous selections.
 
 You have completed the OAuth Consent Screen and **PASSED**!
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -433,7 +433,7 @@ _____________________________________________________
     2. To change go to `Presets.RUBRIC_LOCATION` (type: `string`)
     3. To change you can alternatively run `python3 update.py --show-all`
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -459,7 +459,7 @@ Below are the three new tabs that the script will upload during runtime.
 2. `AI Grades` contains the grades collected from grading the responses of the Google Form. This is an exact copy of the local `graded_submissions.csv` file with correct formatting (commas where they should be).
 3. `Student Gradebook` contains applicant grade averages and other metrics. This is an exact copy of the local `gradebook_report.csv` file with correct formatting (commas where they should be).
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -533,7 +533,7 @@ _____________________________________________________
 9. `Scores`
    1. A list of all scores scored by the AI.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
@@ -564,7 +564,7 @@ _____________________________________________________
    1. While grading each question, our code calls the Replicate API. When calling the API: our code waits for a response before grading the next question. On average: Replicate takes 3 - 5 seconds to reply. Running multiple threads or processes may decrease runtime by 80% - 95% depending on the multithreading scheme.
    2. A simpler solution may be to run the code at night or over weekends.
 
-###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
 
