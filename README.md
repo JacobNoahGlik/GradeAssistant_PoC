@@ -3,7 +3,7 @@ Use AI to grade open-response questions on a Google Forms Quiz or Application
 
 Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
 
-###### Please note this readme's [Possible Considerations for Enterprise Use section](#Chapter-3:-Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts you may wish to fix before using this codebase directly for enterprise use.
+###### Please note this readme's [Possible Considerations for Enterprise Use section](#Chapter-3:-Possible-Considerations-for-Enterprise-Use) before implementing this codebase for enterprise use. With that in mind, this is a Proof of Concept: we have taken shortcuts you may wish to fix before using this codebase directly for enterprise use. Here is the [Link to the Possible Considerations for Enterprise Use seciton](#Possible-Considerations-for-Enterprise-Use).
 
 <br>
 
