@@ -19,7 +19,7 @@ $ git ls-files '*.py' | xargs wc -l
 
 <br>
 
-## lines of text (total repo)
+## lines of text (total repo):
 ```txt
 $ git ls-files | xargs wc -l
    349 GoogleStructures.py
