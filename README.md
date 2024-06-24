@@ -415,7 +415,8 @@ _____________________________________________________
 
 ### AI Grades tab/sheet
 1. `Name`
-   1. The name of the user. To change this column (if the Google Form uses "Full Name", or a different case, etc: change the value directly in `Presets.GOOGLE_FORM_USER_IDENTIFIER`).
+   1. The name of the user.
+   2. To change this column (if the Google Form uses "Full Name", or a different case, etc) change the value directly in `Presets.GOOGLE_FORM_USER_IDENTIFIER`.
 2. `Question`
    1. The question the applicant is answering for which the rubric was found.
 3. `Response`
