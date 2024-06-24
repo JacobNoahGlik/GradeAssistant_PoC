@@ -7,8 +7,6 @@ Use AI to grade open-response questions on a Google Forms Quiz or Application. U
 
 ## Table of Contents
 
-### **Contains:**
-
 - [Repo Summary](#Repo-Summary)
    - [Objectives](#Objectives)
    - [Keywords](#Keywords)
