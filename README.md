@@ -522,16 +522,16 @@ _____________________________________________________
    1. Average score the AI gave to each response for this user. (min=0, max=9)
 7. `Volatility`
    1. The consistency of the AI's grades for this user. `0.0` means the AI gave all the same scores while `1.0` means the AI gave an equal number of highest possible scores to the lowest possible scores.
-   2. `[0, 0, 0, 0]` `->` `Volatility` `=` `0.0`
-   3. `[9, 9, 9, 9]` `->` `Volatility` `=` `0.0`
-   4. `[0, 9, 0, 9]` `->` `Volatility` `=` `1.0`
+   2. `[0, 0, 0, 0]` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Volatility` `=` `0.0`
+   3. `[9, 9, 9, 9]` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Volatility` `=` `0.0`
+   4. `[0, 9, 0, 9]` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Volatility` `=` `1.0`
 8. `Classification`
    1. Volatility score classified:
-      1. `Volatility` `<` `0.15` `->` `Classification:` `Very Consistent`
-      2. `Volatility` `<` `0.32` `->` `Classification:` `Consistent`
-      3. `Volatility` `<` `0.55` `->` `Classification:` `Somewhat Inconsistent`
-      4. `Volatility` `<` `0.70` `->` `Classification:` `Very Inconsistent`
-      4. `Volatility` `>` `0.70` `->` `Classification:` `HIGHLY VOLATILE`
+      1. `Volatility` `<` `0.15` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Classification:` `Very Consistent`
+      2. `Volatility` `<` `0.32` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Classification:` `Consistent`
+      3. `Volatility` `<` `0.55` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Classification:` `Somewhat Inconsistent`
+      4. `Volatility` `<` `0.70` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Classification:` `Very Inconsistent`
+      4. `Volatility` `>` `0.70` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Classification:` `HIGHLY VOLATILE`
 9. `Scores`
    1. A list of all scores scored by the AI.
 
