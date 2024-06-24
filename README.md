@@ -11,6 +11,10 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
 
 ### **Contains:**
 
+- [Repo Summary](#Repo-Summary)
+   - [Objectives](#Objectives)
+   - [Keywords](#Keywords)
+   - [Additional Value](#Additional-Value)
 - [Usage](#Usage)
    - [Run the Code](#Run-the-Code)
    - [Setting Up Your Environment](#Setting-Up-Your-Environment)
@@ -27,6 +31,65 @@ Upload Google Form responses, projected grades, and resulting grade book to Goog
    - [Security](#Security)
    - [Better AI training](#Better-AI-training)
    - [Improving API call speed (Multithreading)](#Improving-API-call-speed-Multithreading)
+
+<br>
+
+_____________________________________________________
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+# Repo Summary
+
+This is a Proof of Concept (PoC) for automating the grading of open-response answers using Google Forms and Google Sheets. The goal is to demonstrate the feasibility of using AI to grade questions and upload the results to Google Sheets.
+
+<br>
+
+## Objectives
+###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+
+1. Automate grading of open-response answers using AI.
+2. Integrate with Google Forms to fetch submissions.
+3. Upload grades to Google Sheets.
+
+<br>
+
+<br>
+
+## Keywords
+###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+
+- Automating grading
+- Open-response answers
+- Google Forms
+- Google Sheets
+- Google OAuth 2.0 tokens
+- OAuth consent screen
+- API call speed optimization (multithreading)
+- AI training
+- Security considerations for enterprise use
+
+<br>
+
+<br>
+
+## Additional Value
+###### [back to top](#Grade-Assistant-Proof-of-Concept-PoC)
+
+This readme provides step-by-step instructions on:
+- Setting up Google OAuth 2.0 tokens
+- Passing the OAuth consent screen process
+- Configuring API credentials for desktop applications
+- Integrating with Google Forms and Google Sheets
+
+This repo can serve as a valuable resource for those looking to automate grading processes, integrate with Google Forms and Sheets, or learn about OAuth token setup and API credential configuration.
 
 <br>
 
