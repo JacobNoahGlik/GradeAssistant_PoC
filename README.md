@@ -434,7 +434,12 @@ _____________________________________________________
 3. `phone number`
    1. The phone number the user gave in the Google Form.
 4. `AI Letter Grade`
-   1. A letter grade derived from the percentage. (A ≥ 0.9, B ≥ 0.8, C ≥ 0.7, D ≥ 0.6, else: F)
+   1. A letter grade derived from the percentage as follows:
+      1. `A` `≥` `0.9` (`90%`)
+      2. `B` `≥` `0.8` (`80%`)
+      3. `C` `≥` `0.7` (`70%`)
+      4. `D` `≥` `0.6` (`60%`)
+      5. `F` `<` `0.6` (`59%`)
 5. `AI Percentage`
    1. A percentage scored by averaging the applicant's grades. We recommend formatting this column as `number > percentage` in Google Sheets.
 6. `Avg AI Score`
@@ -446,11 +451,11 @@ _____________________________________________________
    4. `[0, 9, 0, 9]` `->` `Volatility` `=` `1.0`
 8. `Classification`
    1. Volatility score classified:
-      1. `Volatility` `<` `0.15` `->` Classification: `Very Consistent`
-      2. `Volatility` `<` `0.32` `->` Classification: `Consistent`
-      3. `Volatility` `<` `0.55` `->` Classification: `Somewhat Inconsistent`
-      4. `Volatility` `<` `0.70` `->` Classification: `Very Inconsistent`
-      4. `Volatility` `>` `0.70` `->` Classification: `HIGHLY VOLATILE`
+      1. `Volatility` `<` `0.15` `->` `Classification:` `Very Consistent`
+      2. `Volatility` `<` `0.32` `->` `Classification:` `Consistent`
+      3. `Volatility` `<` `0.55` `->` `Classification:` `Somewhat Inconsistent`
+      4. `Volatility` `<` `0.70` `->` `Classification:` `Very Inconsistent`
+      4. `Volatility` `>` `0.70` `->` `Classification:` `HIGHLY VOLATILE`
 9. `Scores`
    1. A list of all scores scored by the AI.
 
