@@ -161,7 +161,7 @@ class Grader:
         return self._gredebook_report(gradebook_report_file, order_by=order_by)
 
     def _gredebook_report(self, path: str, order_by: str = 'Name') -> str:
-        header: str = [Presets.GOOGLE_FORM_USER_IDENTIFIER, 'email', 'phone number', 'AI Leter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
+        header: str = [Presets.GOOGLE_FORM_USER_IDENTIFIER, 'email', 'phone number', 'AI Letter Grade', 'AI Percentage', 'Avg AI Score', 'Volatility', 'Classification', 'Scores']
         csv_str: str = ','.join(header) + '\n'
         for user in self.Gradebook.keys():
             grades: list = self.Gradebook[user]
