@@ -141,6 +141,8 @@ In a Linux shell/terminal: follow the lines in the `update.bash` file:
 2. `pip install apiclient (1.0.4)`
 3. `pip install getpass`
 4. `pip install replicate`
+5. `pip install pycryptodome cryptography`
+6. `pip install --upgrade cryptography`
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
