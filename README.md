@@ -1,4 +1,4 @@
-# Grade Assistant Proof of Concept (PoC)
+# Grade Assistant Proof of Concept
 Use AI to grade open-response questions on a Google Forms Quiz or Application
 
 Upload Google Form responses, projected grades, and resulting grade book to Google Sheets
