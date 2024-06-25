@@ -27,7 +27,7 @@ class RubricTable:
         if not os.path.exists(self.filename):
             print(f'\n > Could not find file: "{self.filename}"')
             if input('Download rubric from google spreadsheet (y/n): ').lower() in ['y', 'yes', 'yeah']:
-                RubricChanges.download()
+                RubricChanges.download(defined_filename=Presets.RUBRIC_LOCATION)
             else:
                 raise InvalidUsageError(f'Could not find file: "{self.filename}"')
         
