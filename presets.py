@@ -8,6 +8,7 @@ class Presets:
     GRADEBOOK_REPORT_LOCATION: str = './output/gradebook_report.csv'
     SUBMISSIONS_LOCATION: str = './output/submissions.csv'
     RUBRIC_LOCATION: str = 'rubric.csv'
+    REQUIRED_PACKAGES_FILENAME: str = 'required_packages.txt'
 
 
 
