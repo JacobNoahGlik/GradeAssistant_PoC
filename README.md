@@ -155,6 +155,11 @@ Try installing packages manually. In a Linux shell/terminal with python3 install
 7. `pip install pycryptodome cryptography`
 8. `pip install --upgrade cryptography`
 
+<br>
+
+If issues with packages persist you may want to remove all packages (by running the code below) and re-install them manually (as show above).
+`pip uninstall google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient pycryptodome cryptography`
+
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
