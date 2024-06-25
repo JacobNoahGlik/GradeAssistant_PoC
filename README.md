@@ -157,7 +157,7 @@ Try installing packages manually. In a Linux shell/terminal with python3 install
 
 <br>
 
-If issues with packages persist you may want to remove all packages (by running the code below) and re-install them manually (as show above).
+If issues with packages persist you may want to remove all packages (by running the code below) and re-install them manually (as shown above in [Dealing with `Auto Package Manager` issues?](#Dealing-with-Auto-Package-Manager-issues)).
 `pip uninstall google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient pycryptodome cryptography`
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
