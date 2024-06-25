@@ -137,7 +137,10 @@ _____________________________________________________
 ## Setting Up Your Environment
 
 ### Default method
+
 To use the `Auto Package Manager` system: simply run the code disregarding packages and the `Package Manager` system should automatically detect missing packages. It should install them automatically.
+
+<br>
 
 ### Dealing with `Auto Package Manager` issues?
 
