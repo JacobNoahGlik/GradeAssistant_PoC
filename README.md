@@ -161,6 +161,8 @@ If issues with packages persist you may want to remove all packages (by running 
 
 `pip uninstall google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient pycryptodome cryptography`
 
+###### [back to "Run the Code"](#Run-the-Code)
+
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
@@ -195,8 +197,6 @@ _____________________________________________________
 <HttpError 400 when requesting https://sheets.googleapis.com/v4/spreadsheets/$Sheet_ID:batchUpdate?alt=json returned "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25". Details: "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25">
 ```
 This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
-
-###### [back to "Run the Code"](#Run-the-Code)
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
