@@ -110,7 +110,7 @@ class Grader:
         std_out: str = f'{Presets.GOOGLE_FORM_USER_IDENTIFIER},Question,Response,AI Grade,AI Reasoning\n'
         total_iter: int = self._get_total_iter()
         counter: int = 0
-        avg_api_call_time: float = 3.41
+        avg_api_call_time: float = 3.671
         projected_time: int = total_iter * avg_api_call_time
         for question in self.Gradeable_questions:
             print(f'AI has graded {counter} out of {total_iter} submissions. ({round(counter/total_iter*100,1)}% complete, projected time left: {time_formater(projected_time - avg_api_call_time * counter)})                    ', end='\r')
