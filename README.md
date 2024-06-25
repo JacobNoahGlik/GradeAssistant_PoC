@@ -136,13 +136,32 @@ _____________________________________________________
 
 ## Setting Up Your Environment
 
-In a Linux shell/terminal: follow the lines in the `update.bash` file:
-1. `pip install -r requirements.txt`
-2. `pip install apiclient (1.0.4)`
-3. `pip install getpass`
-4. `pip install replicate`
-5. `pip install pycryptodome cryptography`
-6. `pip install --upgrade cryptography`
+### Default method
+
+To use the `Auto Package Manager` system: simply run the code disregarding packages and the `Package Manager` system should automatically detect missing packages. It should install them automatically.
+
+<br>
+
+### Dealing with `Auto Package Manager` issues?
+
+Try installing packages manually. In a Linux shell/terminal with python3 installed run the following code:
+
+1. `pip install google-api-python-client==1.7.9`
+2. `pip install google-auth-httplib2==0.0.3`
+3. `pip install google-auth-oauthlib==0.4.0`
+4. `pip install apiclient==1.0.4`
+5. `pip install getpass`
+6. `pip install replicate`
+7. `pip install pycryptodome cryptography`
+8. `pip install --upgrade cryptography`
+
+<br>
+
+If issues with packages persist you may want to remove all packages (by running the code below) and re-install them manually (as shown above in [Dealing with `Auto Package Manager` issues?](#Dealing-with-Auto-Package-Manager-issues)).
+
+`pip uninstall google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient pycryptodome cryptography`
+
+###### [back to "Run the Code"](#Run-the-Code)
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
@@ -232,6 +251,8 @@ _____________________________________________________
       2. `update_spreadsheet`
       3. `Google_Sheet_URL` (make sure to replace `Google_Sheet_URL` with the URL of your Google sheet **ONLY IF** *you did not add the optional URL in the first step*)
          1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
+
+###### [back to "Run the Code"](#Run-the-Code)
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 

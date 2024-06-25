@@ -1,3 +1,5 @@
+import package_manager
+
 import csv
 import os.path
 from google.auth.transport.requests import Request
@@ -6,7 +8,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client import client, file, tools
-from apiclient import discovery
+from googleapiclient import discovery
 from httplib2 import Http
 from util import get_sheet_values, to_csv_safe, write_to_file
 from presets import InvalidUsageError, Presets
@@ -113,8 +115,10 @@ class GoogleLoginManager:
 
     def _on_startup(self):
         if os.path.exists('token.json'):
+            NEWLINE, TAB = '\n', '\t'
             print(
-                'WARNING: "token.json" already exists. This may allow attackers to access your account if they get access to this file.'
+               f'{NEWLINE}Google Login Manager:{NEWLINE}{TAB}WARNING: "token.json" already exists. ' \
+                'This may allow attackers to access your account if they get access to this file.'
             )
 
     def has_expired(self) -> bool:
