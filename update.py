@@ -1,3 +1,5 @@
+import package_manager
+
 import sys
 from secureparsing import SecureParsing
 from util import secure_input, selection, update_presets, id_strip, identity

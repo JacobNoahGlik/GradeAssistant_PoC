@@ -1,3 +1,5 @@
+import package_manager
+
 import replicate
 from presets import InvalidUsageError, Presets
 from secureparsing import SecureParsing

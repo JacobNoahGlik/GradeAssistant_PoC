@@ -1,6 +1,8 @@
+import package_manager
+
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
-from util import CSVFile, Presets, classification, calc_volatility, value_to_score, comma_swap, time_formater, to_csv_safe, write_to_file
+from util import CSVFile, Presets, classification, calc_volatility, value_to_score, comma_swap, time_formater, to_csv_safe
 from presets import InvalidUsageError, Presets
 import os
 from update_rubric import RubricChanges
@@ -127,7 +129,8 @@ class Grader:
         try_again: bool = True
         while try_again:
             try:
-                write_to_file(file_out, std_out)
+                with open(file_out, 'w') as graded:
+                    graded.write(std_out)
                 CSVFile.reorder_by_header(file_out, order_by)
                 print('\n> Wrote grades to file successfully!\n')
                 return
@@ -180,7 +183,8 @@ class Grader:
                     to_csv_safe(f'[{",".join([str(g) for g in grades])}]')
                 ]
             ) + '\n'
-        write_to_file(path, csv_str)
+        with open(path, 'w') as f:
+            f.write(csv_str)
         CSVFile.reorder_by_header(path, order_by)
 
     def _letter_grade(self, number: int, times: int) -> tuple[str, float]:
@@ -194,7 +198,6 @@ class Grader:
         elif grade >= 0.6:
             return ('D', round(grade * 100, 1))
         return ('F', round(grade * 100, 1))
-
 
 
 if __name__ == "__main__":

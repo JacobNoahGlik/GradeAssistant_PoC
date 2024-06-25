@@ -1,13 +1,14 @@
 class Presets:
     AI_MODEL: str = "meta/llama-2-70b-chat"
-    GOOGLE_SPREADSHEET_ID: str = ""
-    GOOGLE_FORM_ID: str = ""
+    GOOGLE_SPREADSHEET_ID: str = "1ppM-ieo_sFMIXKejrzGge4hVF4kDONw2yuv5NGdMPQ4"
+    GOOGLE_FORM_ID: str = "1p28w1cHyYXombVt7XbInwGcYa-y5OMNSbFWzQMncups"
     GOOGLE_FORM_USER_IDENTIFIER: str = "Name"
     COMMA_PLACEHOLDER: str = '<INSERT_COMMA>'
     GRADED_SUBMISSIONS_LOCATION: str = './output/graded_submissions.csv'
     GRADEBOOK_REPORT_LOCATION: str = './output/gradebook_report.csv'
     SUBMISSIONS_LOCATION: str = './output/submissions.csv'
     RUBRIC_LOCATION: str = 'rubric.csv'
+    REQUIRED_PACKAGES_FILENAME: str = 'required_packages.txt'
 
 
 
@@ -24,11 +25,10 @@ class InvalidUsageError(Exception):
 for preset_name, value in Presets.__dict__.items():
     if isinstance(value, str) and not value.strip():
         # print(f"Empty string found: {preset}")
-        print(
-           f"\nPresets.{preset_name} is not defined! All variables in the Presets class (found in the 'presets.py' file) must have values. " \
-            "Update the values directly or run 'python3 update.py --show-all'\n"
-        )
-        exit()
+        raise PresetsMissingOrCorruptedException(
+           f"Presets.{preset_name} is not defined! All variables in the Presets class (found in the 'presets.py' file) must have values. " \
+            "Update the values directly or run 'python3 update.py --show-all'"
+            )
 
 
 

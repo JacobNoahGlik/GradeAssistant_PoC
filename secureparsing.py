@@ -1,3 +1,5 @@
+import package_manager
+
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
@@ -7,7 +9,6 @@ import random
 import secrets
 import time
 import os
-from util import write_to_file
 from presets import InvalidUsageError
 
 
@@ -106,7 +107,8 @@ class SecureStorage:
         time, _ = TimmingSystem.cuttoff(TimmingSystem.current_time())
         password = EncryptionMethods.hash_string(f'password:{time}')
         cyphertext = EncryptionMethods.encrypt(data, password)
-        write_to_file(file_name, cyphertext)
+        with open(file_name, 'w') as f:
+            f.write(cyphertext)
 
     @staticmethod
     def load(file_name: str):

@@ -1,3 +1,5 @@
+import package_manager
+
 import csv
 import os.path
 from google.auth.transport.requests import Request
@@ -6,9 +8,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from oauth2client import client, file, tools
-from apiclient import discovery
+from googleapiclient import discovery
 from httplib2 import Http
-from util import get_sheet_values, to_csv_safe, write_to_file
+from util import get_sheet_values, to_csv_safe
 from presets import InvalidUsageError, Presets
 
 
@@ -70,11 +72,12 @@ class SubmissionTable:
         try_again: bool = True
         while try_again:
             try:
-                str_out: str = ''
-                str_out += ','.join(self.header)
-                for submission in self.submissions.values():
-                    str_out += '\n' + (','.join(submission)).replace('\n', ' ')
-                write_to_file(path, str_out)
+                with open(path, 'w') as csv:
+                    csv.write(','.join(self.header))
+                    for submission in self.submissions.values():
+                        csv.write('\n')
+                        s = (','.join(submission)).replace('\n', ' ')
+                        csv.write(s)
                 if display_outcome: print(f'> Updated "{path}" successfully')
                 return True
             except PermissionError as e:
@@ -113,8 +116,10 @@ class GoogleLoginManager:
 
     def _on_startup(self):
         if os.path.exists('token.json'):
+            NEWLINE, TAB = '\n', '\t'
             print(
-                'WARNING: "token.json" already exists. This may allow attackers to access your account if they get access to this file.'
+               f'{NEWLINE}Google Login Manager:{NEWLINE}{TAB}WARNING: "token.json" already exists. ' \
+                'This may allow attackers to access your account if they get access to this file.'
             )
 
     def has_expired(self) -> bool:
@@ -162,7 +167,8 @@ class GoogleLoginManager:
                     "credentials.json", SCOPES)
                 self.credentials = flow.run_local_server(port=8080)
                 response: str = 'Logged in Successfully - Access Granted'
-        write_to_file("token.json", self.credentials.to_json())
+        with open("token.json", "w") as token:
+            token.write(self.credentials.to_json())
         return self.credentials
     
 
@@ -274,13 +280,12 @@ class GoogleUtils:
             if not values:
                 print('No data found.')
                 return False
-            str_out: str = ''
-            for row in values:
-                row = [
-                    str(cell).replace(separator, Presets.COMMA_PLACEHOLDER) for cell in row
-                ]
-                str_out += separator.join(row) + '\n'
-            write_to_file(csv_filename, str_out)
+            with open(csv_filename, 'w', newline='') as file:
+                for row in values:
+                    row = [
+                        str(cell).replace(separator, Presets.COMMA_PLACEHOLDER) for cell in row
+                    ]
+                    file.write(separator.join(row) + '\n')
             return True
         except HttpError as err:
             print(err)

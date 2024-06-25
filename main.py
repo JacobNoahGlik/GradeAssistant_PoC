@@ -1,3 +1,5 @@
+import package_manager
+
 from GoogleStructures import SubmissionTable, GoogleFormsQuestion, GoogleUtils
 from RubricStructures import Grader
 from presets import Presets

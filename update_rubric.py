@@ -1,3 +1,5 @@
+import package_manager
+
 from GoogleStructures import GoogleUtils
 from presets import Presets
 import sys
@@ -40,6 +42,7 @@ if __name__ == '__main__':
         print('UsageError - expected:')
         print('\t"python3 update_rubric.py --download [optional: rubric_filename.csv]"')
         print('\t"python3 update_rubric.py --upload [optional: rubric_filename.csv]"')
+        exit()
 
     if sys.argv[1].lower() == '--download':
         RubricChanges.download()
