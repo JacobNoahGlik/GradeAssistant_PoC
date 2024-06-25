@@ -196,6 +196,8 @@ _____________________________________________________
 ```
 This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
 
+###### [back to "Run the Code"](#Run-the-Code)
+
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
 <br>
@@ -249,6 +251,8 @@ _____________________________________________________
       2. `update_spreadsheet`
       3. `Google_Sheet_URL` (make sure to replace `Google_Sheet_URL` with the URL of your Google sheet **ONLY IF** *you did not add the optional URL in the first step*)
          1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
+
+###### [back to "Run the Code"](#Run-the-Code)
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
