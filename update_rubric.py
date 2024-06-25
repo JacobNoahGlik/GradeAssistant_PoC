@@ -35,12 +35,13 @@ class RubricChanges:
 
 
 
-if len(sys.argv) not in [2, 3] or sys.argv[1].lower() not in ['--download', '--upload']:
-    print('UsageError - expected:')
-    print('\t"python3 update_rubric.py --download [optional: rubric_filename.csv]"')
-    print('\t"python3 update_rubric.py --upload [optional: rubric_filename.csv]"')
+if __name__ == '__main__':
+    if len(sys.argv) not in [2, 3] or sys.argv[1].lower() not in ['--download', '--upload']:
+        print('UsageError - expected:')
+        print('\t"python3 update_rubric.py --download [optional: rubric_filename.csv]"')
+        print('\t"python3 update_rubric.py --upload [optional: rubric_filename.csv]"')
 
-if sys.argv[1].lower() == '--download':
-    RubricChanges.download()
-else:
-    RubricChanges.upload()
+    if sys.argv[1].lower() == '--download':
+        RubricChanges.download()
+    else:
+        RubricChanges.upload()

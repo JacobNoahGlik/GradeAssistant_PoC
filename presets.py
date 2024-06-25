@@ -24,10 +24,11 @@ class InvalidUsageError(Exception):
 for preset_name, value in Presets.__dict__.items():
     if isinstance(value, str) and not value.strip():
         # print(f"Empty string found: {preset}")
-        raise PresetsMissingOrCorruptedException(
-           f"Presets.{preset_name} is not defined! All variables in the Presets class (found in the 'presets.py' file) must have values. " \
-            "Update the values directly or run 'python3 update.py --show-all'"
-            )
+        print(
+           f"\nPresets.{preset_name} is not defined! All variables in the Presets class (found in the 'presets.py' file) must have values. " \
+            "Update the values directly or run 'python3 update.py --show-all'\n"
+        )
+        exit()
 
 
 

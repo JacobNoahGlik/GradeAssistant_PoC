@@ -28,14 +28,14 @@ def selection(listing: dict[str, callable]) -> callable:
     for i, key in enumerate(listing):
         print(f'    {i + 1}. {key}')
     selection = input('> ')
-    valid, response = validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing))
+    valid, response = _validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing))
     while (not valid):
         print(f"Could not select. ERROR: '{response}'")
         print('Please select one of the following')
         for i, key in enumerate(listing):
             print(f'    {i + 1}. {key}')
         selection = input('> ')
-        valid, response = validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing))
+        valid, response = _validate(selection, _isnumber=True, _max_size=i + 1, whitelist=list(listing))
     if type(response) == int:
         return listing[
             list(listing)[response]
@@ -45,7 +45,7 @@ def selection(listing: dict[str, callable]) -> callable:
     return listing[response]
 
 
-def validate(inp: str, _isnumber: bool = False, _max_size: int = -1, whitelist: list = []) -> tuple[bool, str]:
+def _validate(inp: str, _isnumber: bool = False, _max_size: int = -1, whitelist: list = []) -> tuple[bool, str]:
     if inp.lower() in whitelist:
         return True, inp
     if _isnumber:
@@ -73,12 +73,26 @@ def safe_write(action: callable, param: tuple, path: str, display_outcome: bool 
     return False
 
 
+def write_to_file(path: str, string: str, editing_mode: str = 'w') -> None:
+    _validate_filepath(path)
+    with open(path, editing_mode) as file_out:
+        file_out.write(string)
+
+
+def _validate_filepath(path: str) -> None:
+    directory = os.path.dirname(path)
+    if directory and not os.path.exists(directory):
+        os.makedirs(directory)
+
+
 def get_sheet_values(sheet) -> tuple[str, str]:
     return (sheet['properties']['title'], sheet['properties']['sheetId'])
 
 
-def to_csv_safe(s: str) -> str:
-    return s.replace(',', Presets.COMMA_PLACEHOLDER).replace('“', '"').replace('”', '"').replace('’', "'").replace('\n', ' ')
+def to_csv_safe(s: str, remove_newline: bool = True) -> str:
+    if remove_newline:
+        s = s.replace('\n',' ')
+    return s.replace(',', Presets.COMMA_PLACEHOLDER).replace('“', '"').replace('”', '"').replace('’', "'")
 
 
 def from_csv_safe(s: str) -> str:
@@ -94,15 +108,10 @@ def update_adendum(adendum_location: str = 'adendum.gd', rubric_location: str = 
         lines = adendum.read().split('\n')
     csv_add: str = '\n'
     for i, line in enumerate(lines):
-        csv_add += f'{correct_string(line)},'
+        csv_add += f'{to_csv_safe(line)},'
         if i % length == length - 1:
             csv_add = csv_add[:-1] + '\n'
-    with open(rubric_location, 'a') as rubric:
-        rubric.write(csv_add)
-
-
-def correct_string(s: str) -> str:
-    return s.replace('“', '"').replace('”', '"').replace('’', "'").replace(",", Presets.COMMA_PLACEHOLDER)
+    write_to_file(rubric_location, csv_add, editing_mode='a')
 
 
 def calc_volatility(scores: list[int], min: int, max: int, rounding: int = 2) -> float:
@@ -162,8 +171,7 @@ def update_presets(presets_file: str, find: str, replace: str):
             lines[i] = replace
             found = True
     if found:
-        with open(presets_file, 'w') as f:
-            f.write(''.join(lines))
+        write_to_file(presets_file, ''.join(lines))
         print(f'> Updated Successfully')
     else:
         print(f'> Update Failed')
@@ -204,8 +212,7 @@ class Counter:
             self.count = int(f.read())
     
     def _update(self) -> None:
-        with open(self.file, 'w') as f:
-            f.write(f'{self.count}')
+        write_to_file(self.file, f'{self.count}')
 
 
 

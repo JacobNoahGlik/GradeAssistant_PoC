@@ -7,6 +7,7 @@ import random
 import secrets
 import time
 import os
+from util import write_to_file
 from presets import InvalidUsageError
 
 
@@ -105,8 +106,7 @@ class SecureStorage:
         time, _ = TimmingSystem.cuttoff(TimmingSystem.current_time())
         password = EncryptionMethods.hash_string(f'password:{time}')
         cyphertext = EncryptionMethods.encrypt(data, password)
-        with open(file_name, 'w') as f:
-            f.write(cyphertext)
+        write_to_file(file_name, cyphertext)
 
     @staticmethod
     def load(file_name: str):
