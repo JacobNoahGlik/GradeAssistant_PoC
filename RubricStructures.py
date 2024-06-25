@@ -1,3 +1,5 @@
+import package_manager
+
 import GoogleStructures
 from auto_grader_ai import Auto_Grader_AI
 from util import CSVFile, Presets, classification, calc_volatility, value_to_score, comma_swap, time_formater, to_csv_safe, write_to_file
