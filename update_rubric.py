@@ -8,20 +8,34 @@ import sys
 
 class RubricChanges:
     @staticmethod
-    def download(print_status: bool = True):
+    def download(
+        print_status: bool = True, 
+        defined_filename: str | None = None
+    ):
+        if defined_filename is not None:
+            rubric_location = defined_filename
+        else:
+            rubric_location = RubricChanges.get_filename()
         if GoogleUtils.google_sheets_to_csv(
             Presets.GOOGLE_SPREADSHEET_ID,
             'Rubric',
-            RubricChanges.get_filename()
+            rubric_location
         ):
             if print_status: print('> download success')
         else:
             if print_status: print('> download failure')
 
     @staticmethod
-    def upload(print_status: bool = True):
+    def upload(
+        print_status: bool = True, 
+        defined_filename: str | None = None
+    ):
+        if defined_filename is not None:
+            rubric_location = defined_filename
+        else:
+            rubric_location = RubricChanges.get_filename()
         if GoogleUtils.csv_to_google_sheets(
-            RubricChanges.get_filename(),
+            rubric_location,
             'Rubric',
             Presets.RUBRIC_LOCATION
         ):
