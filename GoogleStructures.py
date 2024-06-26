@@ -314,7 +314,7 @@ class GoogleUtils:
     def get_form_questions_and_submissions(
         form_id: str, 
         discovery_doc = "https://forms.googleapis.com/$discovery/rest?version=v1"
-    ) -> tuple[any, any]:
+    ) -> tuple[list[dict], list[dict]]:
         
         creds = GoogleCredentialManager.form_login()
         form_service = discovery.build(

@@ -7,10 +7,12 @@ from presets import Presets
 
 
 if __name__ == '__main__':
-    raw_questions, raw_submissions = GoogleUtils.get_form_questions_and_submissions(Presets.GOOGLE_FORM_ID)
+    google_form: tuple[list[dict], list[dict]] = GoogleUtils.get_form_questions_and_submissions(Presets.GOOGLE_FORM_ID)
+    raw_questions: list[dict]   = google_form[0]
+    raw_submissions: list[dict] = google_form[1]
     questions: list[GoogleFormsQuestion] = GoogleUtils.get_GFQ_list(raw_questions)
 
-    table = SubmissionTable(questions)
+    table: SubmissionTable = SubmissionTable(questions)
     table.bulk_add_submissions(raw_submissions)
     table.to_csv(Presets.SUBMISSIONS_LOCATION)
 
