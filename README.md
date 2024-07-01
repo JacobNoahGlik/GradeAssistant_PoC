@@ -116,6 +116,7 @@ _____________________________________________________
 
 1. Update your credentials to use this code. (step-by-step walkthrough found [here](#Update-Your-Credentials))
    1. Make sure your Google Spreadsheet has a `Rubric` section. ([Here is a sample Google Spreadsheet](https://docs.google.com/spreadsheets/d/1esS07j_bAnAuJTlzbBSTuUt2BVFOLlRvsmu4IFkPL7U/edit?usp=sharing) you can copy)
+   2. Make sure your Google Form has the following questions (`Name`, `Email`, `Phone number`) as questions with identical text as the ones in your rubric so that they can match up when auto-grading. ([Here is a sample Google Form](https://docs.google.com/forms/d/1srvrl8utwEa7ymMNUWZDBrK02AzbhUJrx3kgoJRZYzM/edit?usp=sharing) you can copy)
 2. Set up your environment. (step-by-step walkthrough found [here](#Setting-Up-Your-Environment))
 3. Run `python3 main.py` in a python-equipped terminal.
 
