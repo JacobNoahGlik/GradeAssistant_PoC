@@ -90,7 +90,7 @@ This readme provides step-by-step instructions on:
 - Configuring API credentials for desktop applications
 - Integrating with Google Forms and Google Sheets
 
-This repo can serve as a valuable resource for those looking to automate grading processes, integrate with Google Forms and Sheets, or learn about OAuth token setup and API credential configuration.
+This repo can be a valuable resource for those looking to automate grading processes, integrate with Google Forms and Sheets, or learn about setting up OAuth tokens and API credential configuration.
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
@@ -138,13 +138,13 @@ _____________________________________________________
 
 ### Default method
 
-To use the `Auto Package Manager` system: simply run the code disregarding packages and the `Package Manager` system should automatically detect missing packages. It should install them automatically.
+To use the `Auto Package Manager` system, simply run the code disregarding packages. The `Package Manager` system should automatically detect missing packages and install them automatically.
 
 <br>
 
 ### Dealing with `Auto Package Manager` issues?
 
-Try installing packages manually. In a Linux shell/terminal with python3 installed run the following code:
+Try installing packages manually. In a Linux shell/terminal with python3 installed, run the following code:
 
 1. `pip install google-api-python-client==1.7.9`
 2. `pip install google-auth-httplib2==0.0.3`
@@ -196,7 +196,7 @@ _____________________________________________________
 ```cmd
 <HttpError 400 when requesting https://sheets.googleapis.com/v4/spreadsheets/$Sheet_ID:batchUpdate?alt=json returned "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25". Details: "Invalid requests[0].updateCells: Attempting to write column: 26, beyond the last requested column of: 25">
 ```
-This is caused by the default maximum limit of columns imposed by Google Sheets on your Google Spreadsheet. Make sure you don't have unintended commas in your CSV. You may want to add columns manually if this error persists.
+This is caused by the default maximum column limit imposed by Google Sheets on your Google Spreadsheet. Make sure your CSV doesn't have unintended commas. If this error persists, you may want to add columns manually.
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
@@ -219,7 +219,7 @@ _____________________________________________________
 1. Download the `credentials.json` file
 2. Update the `client-ID` and `client-secret` with your own, given to you by Google when you register an OAuth 2.0 client with Google via Google API Dashboard's [credential manager](https://console.cloud.google.com/apis/credentials). Go to the [Startup Endpoints section](#Startup-Endpoints) of this readme for a walkthrough on setting up your Google Project credentials.
 3. Update the AI token
-   1. Go to [replicate's website](https://replicate.com/docs/get-started/python#authenticate) to create a free account (by linking your GitHub account). NOTE: you get 10 free API calls to the AI. You may wish to add a payment method. This will charge you approx $0.000021 per API call using the default settings. Feel free to set a monthly "Spend Limit" on [their billing page](https://replicate.com/account/billing). Supported models and pricing can be found on [their pricing page, in the language models section](https://replicate.com/pricing#language-models)
+   1. Go to [replicate's website](https://replicate.com/docs/get-started/python#authenticate) to create a free account (by linking your GitHub account). NOTE: you get ten free API calls to the AI. You can add a payment method. Using the default settings will charge you approximately $0.000021 per API call. Feel free to set a monthly "Spend Limit" on [their billing page](https://replicate.com/account/billing). Supported models and pricing can be found on [their pricing page in the language models section](https://replicate.com/pricing#language-models)
       1. Model Options:
          1. meta/llama-2-13b
          2. meta/llama-2-13b-chat
@@ -234,7 +234,7 @@ _____________________________________________________
          11. mistralai/mistral-7b-instruct-v0.2
          12. mistralai/mistral-7b-v0.1
          13. mistralai/mixtral-8x7b-instruct-v0.1
-      2. Model option is set in the `auto_grader_ai.py` file in the `ai` class, in the `generate_response` static method as the first parameter of the `replicate.stream()` function. Change it to any other model if you'd like.
+      2. The model option is set in the `auto_grader_ai.py` file in the `ai` class, in the `generate_response` static method as the first parameter of the `replicate.stream()` function. You can change it to any other model if you'd like.
    2. Once you have an API token from [replicate's token section on their website](https://replicate.com/account/api-tokens): copy the token and run the following in a Python-enabled terminal.
       1. `python3 update.py`
       2. `update_token`
@@ -272,7 +272,7 @@ _________________________
 
 ## Startup Endpoints
 
-To learn about setting up your endpoints for Google Sheets and Google Forms look at their "Python quickstart guides." ([Python quickstart | Google Sheets link](https://developers.google.com/sheets/api/quickstart/python), [Python quickstart | Google Forms link](https://developers.google.com/forms/api/quickstart/python))
+To learn about setting up your endpoints for Google Sheets and Google Forms, look at their "Python quickstart guides." ([Python quickstart | Google Sheets link](https://developers.google.com/sheets/api/quickstart/python), [Python quickstart | Google Forms link](https://developers.google.com/forms/api/quickstart/python))
 
 The short version is a 3-step process for both. 
 1. Enable the API - must be completed separately for Google Sheets and Google Forms
@@ -360,7 +360,7 @@ Enter your email again into the "Email Address" text-entry box with the subtext:
 
 ## Edit app registration - Scopes
 
-Select the `ADD OR REMOVE SCOPES` button to open a table of scopes. The following table can be found on page 3. (results 22-27)
+Select the `ADD OR REMOVE SCOPES` button to open a scopes table. The following table can be found on page 3. (results 22-27)
 
 |add scope| API             | Scope                             | User-facing description                                                                  |
 |---------|-----------------|-----------------------------------|------------------------------------------------------------------------------------------|
@@ -400,7 +400,7 @@ Add the Gmail account that owns the Google Form OR has viewing access to the Goo
 
 ## Edit app registration - Summary
 
-Here you will find a summary of the previous selections. 
+Here is a summary of the previous selections. 
 
 ✔️ Select the `BACK TO DASHBOARD` button to return to your dashboard and create an OAuth token. You can read more about creating an OAuth token in the [Getting an OAuth Token](#Getting-an-OAuth-Token) section of the README.
 
@@ -439,22 +439,22 @@ _____________________________________________________
 ### Default Locations
 ###### NOTE: These default locations can be changed in the `presets.py` file or by running `python3 update.py --show-all`
 
-1. `submissions.csv` is a file representing submissions downloaded from your Google Form. If the data does not look correct try updating your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
+1. `submissions.csv` is a file representing submissions downloaded from your Google Form. If the data does not look correct, try updating your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
     1. By default, it's located in your `output` folder (`./output/submissions.csv`).
-    2. To change go to `Presets.SUBMISSIONS_LOCATION` (type: `string`)
-    3. To change you can alternatively run `python3 update.py --show-all`
+    2. To change, go to `Presets.SUBMISSIONS_LOCATION` (type: `string`)
+    3. To change, you can alternatively run `python3 update.py --show-all`
 2. `graded_submissions.csv` is a file representing questions that have been graded (ordered by `applicant name`). This file will be uploaded to your Google Spreadsheet in the `AI Grades` tab/sheet.
     1. By default, it's located in your `output` folder (`./output/graded_submissions.csv`).
-    2. To change go to `Presets.GRADED_SUBMISSIONS_LOCATION` (type: `string`)
-    3. To change you can alternatively run `python3 update.py --show-all`
+    2. To change, go to `Presets.GRADED_SUBMISSIONS_LOCATION` (type: `string`)
+    3. To change, you can alternatively run `python3 update.py --show-all`
 3. `gradebook_report.csv` is a file representing the average grades applicants received on questions that have been graded (ordered by `applicant name`). This file will be uploaded to your Google Spreadsheet in the `Student Gradebook` tab/sheet.
     1. By default, it's located in your `output` folder (`./output/gradebook_report.csv`).
-    2. To change go to `Presets.GRADEBOOK_REPORT_LOCATION` (type: `string`)
-    3. To change you can alternatively run `python3 update.py --show-all`
+    2. To change, go to `Presets.GRADEBOOK_REPORT_LOCATION` (type: `string`)
+    3. To change, you can alternatively run `python3 update.py --show-all`
 4. `rubric.csv` is a file representing the rubric AI uses to grade questions. This file can be found in your Google Spreadsheet in the `Rubruc` tab/sheet. If the file does not exist locally before you run the program, it will automatically download the file from the Google Spreadsheet. If the tab/sheet in your Google Spreadsheet titled `"Rubruc"` does not exist it may cause an issue for the program.
     1. By default, it's located in your current folder (`./rubric.csv`).
-    2. To change go to `Presets.RUBRIC_LOCATION` (type: `string`)
-    3. To change you can alternatively run `python3 update.py --show-all`
+    2. To change, go to `Presets.RUBRIC_LOCATION` (type: `string`)
+    3. To change, you can alternatively run `python3 update.py --show-all`
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
@@ -474,7 +474,7 @@ _____________________________________________________
 
 ## Expected Google Output Files
 
-The Google Spreadsheet is based on the value of `Presets.GOOGLE_SPREADSHEET_ID`. The authenticating user **must** have "edit permissions." To update or change the value simply run `python3 update.py`, select "update_sheet", and enter the Google Spreadsheet URL.
+The Google Spreadsheet is based on the `Presets.GOOGLE_SPREADSHEET_ID` value. The authenticating user **must** have "edit permissions." To update or change the value simply run `python3 update.py`, select "update_sheet", and enter the Google Spreadsheet URL.
 
 Below are the three new tabs that the script will upload during runtime.
 
@@ -576,19 +576,19 @@ _____________________________________________________
 
 1. ### Security
    1. ###### Please Note: We do not believe this to be a consideration if you run this code on a local machine in your physical possession. 
-   2. We save your `Replicate` token locally in the `token.vault` file using a strong encryption scheme (see `secureparsing.py` for more info). Every time the token is read, it is re-encrypted based on the time. The time is never saved. If this security scheme breaks your corporation's "secure storage standards" (SSS) you may want to consider other solutions for this part. 
-      1. A possible solution may be writing it to your operating system's environment variables instead of a local file. This may obfuscate the retrieval process and make it difficult to accidentally leak the token.
-      2. Alternatively, if you are running this code on a cloud provider's automation account (AWS, Google Cloud, Microsoft Azure, etc) you may want to look into their secret storage manager (SSM). They do this for you.
-   3. We save your Google `Client ID` and `Client Secret` in an unencrypted json file (`credentials.json`). You may wish to change this depending on your corporation's "secure storage standards" (SSS).
-   4. The Google OAuth 2.0 token is saved locally in `json` form during runtime. It is never deleted after code execution. In theory, an attacker could leverage this old token to generate a new one, but it is unlikely and reduces the general load if saved like we have it set up to be. The most viable mitigation tactic would be to remove the file after runtime if you do not project the use of this code for longer then an hour.
+   2. We save your `Replicate` token locally in the `token.vault` file using a robust encryption scheme (see `secureparsing.py` for more info). Every time the token is read, it is re-encrypted based on the time. The time is never saved. If this security scheme breaks your corporation's "secure storage standards" (SSS), you may want to consider other solutions. 
+      1. A possible solution may be writing it to your operating system's environment variables instead of a local file. This may obfuscate the retrieval process and make it challenging to leak the token accidentally.
+      2. Alternatively, if you run this code on a cloud provider's automation account (AWS, Google Cloud, Microsoft Azure, etc), you may want to look into their secret storage manager (SSM). They do this for you.
+   3. We save your Google `Client ID` and `Client Secret` in an unencrypted json file (`credentials.json`). Depending on your corporation's "secure storage standards" (SSS), you may wish to change this.
+   4. The Google OAuth 2.0 token is saved locally in `json` form during runtime. It is **never** deleted after code execution. In theory, an attacker could leverage this old token to generate a new one, but it is unlikely and reduces the general load if saved like we have it set up to be. The most viable mitigation tactic would be to remove the file after runtime if you do not project the use of this code for longer than an hour.
 2. ### Better AI training
-   1. When it comes to enhancing AI scores, we recommend editing the `background.txt` file (lines 10 and 12). The following changes will impact the AI's scoring performance for all questions. To alter the AI's scoring of specific questions, alter the rubric for those specific questions.  **Make sure to update the local `rubric.csv` file if you add to the one on Google Spreadsheets or delete it locally and the script wil automatically download the rubric from Google Spreadsheets.**
-      1. Removing instructions like "take into account the flow of the applicants response and grammar / spelling" will make the AI less stringent with spelling and grammar mistakes. 
+   1. Regarding enhancing AI scores, we recommend editing the `background.txt` file (lines 10 and 12). The following changes will impact the AI's scoring performance for all questions. To alter the AI's scoring of specific questions, alter the rubric for those specific questions.  **Make sure to update the local `rubric.csv` file if you add it to the one on Google Spreadsheets or delete it locally, and the script will automatically download the rubric from Google Spreadsheets.**
+      1. Removing instructions like "take into account the flow of the applicant's response and grammar/spelling" will make the AI less stringent with spelling and grammar mistakes. 
       2. Adding text like "Applicants must provide examples from their life experience" will make the AI take points off for missing anecdotes.
-   2. We send all data (background, rubric, question, submission) in one single message. This can open up the system to malicious prompt engineering attacks and may reduce the quality of responses from the AI. A potential mitigation/improvement would be training the AI with the background, sending the rubric and question in separate messages, and sending the submission in a final message for grading.
+   2. We send all data (background, rubric, question, submission) in one message. This can open the system to malicious, prompt engineering attacks, and may reduce the quality of AI responses. A potential mitigation/improvement is training the AI with the background, sending the rubric and question in separate messages, and sending the submission in a final message for grading.
 3. ### Improving API call speed (Multithreading)
-   1. While grading each question, our code calls the Replicate API. When calling the API: our code waits for a response before grading the next question. On average: Replicate takes 3 - 5 seconds to reply. Running multiple threads or processes may decrease runtime by 80% - 95% depending on the multithreading scheme.
-   2. A simpler solution may be to run the code at night or over weekends.
+   1. While grading each question, our code calls the Replicate API. When calling the API, our code waits for a response before grading the next question. On average, Replicate takes 3 - 5 seconds to reply. Depending on the multithreading scheme, running multiple threads or processes may decrease runtime by 80%—95%.
+   2. A more straightforward solution may be to run the code at night or over weekends.
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
