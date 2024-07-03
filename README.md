@@ -90,7 +90,7 @@ This readme provides step-by-step instructions on:
 - Configuring API credentials for desktop applications
 - Integrating with Google Forms and Google Sheets
 
-This repo can be a valuable resource for those looking to automate grading processes, integrate with Google Forms and Sheets, or learn about setting up OAuth tokens and API credential configuration.
+This repo can be valuable for those looking to automate grading processes, integrate with Google Forms and Sheets, or learn about setting up OAuth tokens and API credential configuration.
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
 
@@ -140,7 +140,7 @@ _____________________________________________________
 
 ### Default method
 
-To use the `Auto Package Manager` system, simply run the code disregarding packages. The `Package Manager` system should automatically detect missing packages and install them automatically.
+To use the `Auto Package Manager` system, simply run the code without considering packages. The system should automatically detect missing packages and install them.
 
 <br>
 
@@ -159,7 +159,7 @@ Try installing packages manually. In a Linux shell/terminal with python3 install
 
 <br>
 
-If issues with packages persist you may want to remove all packages (by running the code below) and re-install them manually (as shown above in [Dealing with `Auto Package Manager` issues?](#Dealing-with-Auto-Package-Manager-issues)).
+If issues with packages persist, you may want to remove all packages (by running the code below) and re-install them manually (as shown above in [Dealing with `Auto Package Manager` issues?](#Dealing-with-Auto-Package-Manager-issues)).
 
 `pip uninstall google-api-python-client google-auth-httplib2 google-auth-oauthlib apiclient pycryptodome cryptography`
 
@@ -246,13 +246,13 @@ _____________________________________________________
       1. `python3 update.py [OPTIONAL: Google_Form_URL]` (make sure to replace `[OPTIONAL: Google_Form_URL]` with the URL of your Google form **AND** *skip the 3rd step if you choose to do this*)
       2. `update_form`
       3. `Google_Form_URL` (make sure to replace `Google_Form_URL` with the URL of your Google form **ONLY IF** *you did not add the optional URL in the first step*)
-         1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
+         1. NOTE: You will not see an update as this will be read as a password and will therefore be invisible.
 6. Update the Google Sheets ID
    1. Run the update script using the following code in a Python-enabled terminal. 
       1. `python3 update.py [OPTIONAL: Google_Sheet_URL]` (make sure to replace `[OPTIONAL: Google_Sheet_URL]` with the URL of your Google sheet **AND** *skip the 3rd step if you choose to do this*)
       2. `update_spreadsheet`
       3. `Google_Sheet_URL` (make sure to replace `Google_Sheet_URL` with the URL of your Google sheet **ONLY IF** *you did not add the optional URL in the first step*)
-         1. NOTE: you will not see an update as this will be read in as a password and will therefore be invisible.
+         1. NOTE: You will not see an update as this will be read as a password and will therefore be invisible.
 
 ###### [back to "Run the Code"](#Run-the-Code)
 
@@ -441,7 +441,7 @@ _____________________________________________________
 ### Default Locations
 ###### NOTE: These default locations can be changed in the `presets.py` file or by running `python3 update.py --show-all`
 
-1. `submissions.csv` is a file representing submissions downloaded from your Google Form. If the data does not look correct, try updating your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
+1. `submissions.csv` is a file representing submissions downloaded from your Google Form. If the data is incorrect, update your Google Form ID (`python3 update.py`). This file will be uploaded to your Google Spreadsheet in the `Submissions` tab/sheet.
     1. By default, it's located in your `output` folder (`./output/submissions.csv`).
     2. To change, go to `Presets.SUBMISSIONS_LOCATION` (type: `string`)
     3. To change, you can alternatively run `python3 update.py --show-all`
@@ -453,7 +453,7 @@ _____________________________________________________
     1. By default, it's located in your `output` folder (`./output/gradebook_report.csv`).
     2. To change, go to `Presets.GRADEBOOK_REPORT_LOCATION` (type: `string`)
     3. To change, you can alternatively run `python3 update.py --show-all`
-4. `rubric.csv` is a file representing the rubric AI uses to grade questions. This file can be found in your Google Spreadsheet in the `Rubruc` tab/sheet. If the file does not exist locally before you run the program, it will automatically download the file from the Google Spreadsheet. If the tab/sheet in your Google Spreadsheet titled `"Rubruc"` does not exist it may cause an issue for the program.
+4. `rubric.csv` is a file representing the rubric AI uses to grade questions. This file can be found in your Google Spreadsheet in the `Rubruc` tab/sheet. If the file does not exist locally before you run the program, it will automatically download the file from the Google Spreadsheet. If the tab/sheet in your Google Spreadsheet titled `"Rubruc" does not exist, it may cause an issue with the program.
     1. By default, it's located in your current folder (`./rubric.csv`).
     2. To change, go to `Presets.RUBRIC_LOCATION` (type: `string`)
     3. To change, you can alternatively run `python3 update.py --show-all`
@@ -476,7 +476,7 @@ _____________________________________________________
 
 ## Expected Google Output Files
 
-The Google Spreadsheet is based on the `Presets.GOOGLE_SPREADSHEET_ID` value. The authenticating user **must** have "edit permissions." To update or change the value simply run `python3 update.py`, select "update_sheet", and enter the Google Spreadsheet URL.
+The Google Spreadsheet is based on the `Presets.GOOGLE_SPREADSHEET_ID` value. The authenticating user **must** have "edit permissions." To update or change the value, run `python3 update.py`, select "update_sheet", and enter the Google Spreadsheet URL.
 
 Below are the three new tabs that the script will upload during runtime.
 
@@ -504,7 +504,7 @@ _____________________________________________________
 
 ### Responses tab/sheet
 1. `responseId`
-   1. Created by Google to enable multiple responses by the same user. This is turned off by default but each response has an ID anyway.
+   1. Google created this to enable multiple responses by the same user. It is turned off by default, but each response has an ID anyway.
 2. `createTime`
    1. The time at which the user started their response.
 3. `lastSubmittedTime`
@@ -529,9 +529,9 @@ _____________________________________________________
 1. `Name`
    1. The name of the user. To change this column (if the Google Form uses "Full Name", or a different case, etc: change the value directly in `Presets.GOOGLE_FORM_USER_IDENTIFIER`).
 2. `email`
-   1. The email the user gave in the Google Form.
+   1. The email the user gave in the Google Form. (Identified as the second question)
 3. `phone number`
-   1. The phone number the user gave in the Google Form.
+   1. The phone number the user gave in the Google Form. (Identified as the third question)
 4. `AI Letter Grade`
    1. A letter grade derived from the percentage as follows:
       1. `A` `≥` `0.9` (`90%`)
@@ -544,7 +544,7 @@ _____________________________________________________
 6. `Avg AI Score`
    1. Average score the AI gave to each response for this user. (min=0, max=9)
 7. `Volatility`
-   1. The consistency of the AI's grades for this user. `0.0` means the AI gave all the same scores while `1.0` means the AI gave an equal number of highest possible scores to the lowest possible scores.
+   1. The consistency of the AI's grades for this user. `0.0` means the AI gave all the identical scores, while `1.0` means the AI gave an equal number of the highest possible scores to the lowest possible scores.
    2. `[0, 0, 0, 0]` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Volatility` `=` `0.0`
    3. `[9, 9, 9, 9]` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Volatility` `=` `0.0`
    4. `[0, 9, 0, 9]` &nbsp;&nbsp;&nbsp; `->` &nbsp;&nbsp;&nbsp; `Volatility` `=` `1.0`
@@ -577,19 +577,19 @@ _____________________________________________________
 #  Possible Considerations for Enterprise Use
 
 1. ### Security
-   1. ###### Please Note: We do not believe this to be a consideration if you run this code on a local machine in your physical possession. 
+   1. ###### Please Note: We do not believe this to be considered if you run this code on a local machine in your physical possession. 
    2. We save your `Replicate` token locally in the `token.vault` file using a robust encryption scheme (see `secureparsing.py` for more info). Every time the token is read, it is re-encrypted based on the time. The time is never saved. If this security scheme breaks your corporation's "secure storage standards" (SSS), you may want to consider other solutions. 
-      1. A possible solution may be writing it to your operating system's environment variables instead of a local file. This may obfuscate the retrieval process and make it challenging to leak the token accidentally.
+      1. A possible solution is to write it to your operating system's environment variables instead of a local file. This may obfuscate the retrieval process and make it challenging to leak the token accidentally.
       2. Alternatively, if you run this code on a cloud provider's automation account (AWS, Google Cloud, Microsoft Azure, etc), you may want to look into their secret storage manager (SSM). They do this for you.
    3. We save your Google `Client ID` and `Client Secret` in an unencrypted json file (`credentials.json`). Depending on your corporation's "secure storage standards" (SSS), you may wish to change this.
-   4. The Google OAuth 2.0 token is saved locally in `json` form during runtime. It is **never** deleted after code execution. In theory, an attacker could leverage this old token to generate a new one, but it is unlikely and reduces the general load if saved like we have it set up to be. The most viable mitigation tactic would be to remove the file after runtime if you do not project the use of this code for longer than an hour.
+   4. The Google OAuth 2.0 token is saved locally in `json` form during runtime. It is **never** deleted after code execution. In theory, an attacker could leverage this old token to generate a new one, but it is unlikely and reduces the general load if saved like we have it set up to be. The most viable mitigation tactic would be to remove the file after runtime if you project the use of this code for an hour at maximum.
 2. ### Better AI training
-   1. Regarding enhancing AI scores, we recommend editing the `background.txt` file (lines 10 and 12). The following changes will impact the AI's scoring performance for all questions. To alter the AI's scoring of specific questions, alter the rubric for those specific questions.  **Make sure to update the local `rubric.csv` file if you add it to the one on Google Spreadsheets or delete it locally, and the script will automatically download the rubric from Google Spreadsheets.**
+   1. Regarding enhancing AI scores, we recommend editing the `background.txt` file (lines 10 and 12). The following changes will impact the AI's scoring performance for all questions. To alter the AI's scoring of specific questions, modify the rubric for those particular questions.  **Make sure to update the local `rubric.csv` file if you add it to the one on Google Spreadsheets or delete it locally, and the script will automatically download the rubric from Google Spreadsheets.**
       1. Removing instructions like "take into account the flow of the applicant's response and grammar/spelling" will make the AI less stringent with spelling and grammar mistakes. 
       2. Adding text like "Applicants must provide examples from their life experience" will make the AI take points off for missing anecdotes.
    2. We send all data (background, rubric, question, submission) in one message. This can open the system to malicious, prompt engineering attacks, and may reduce the quality of AI responses. A potential mitigation/improvement is training the AI with the background, sending the rubric and question in separate messages, and sending the submission in a final message for grading.
 3. ### Improving API call speed (Multithreading)
-   1. While grading each question, our code calls the Replicate API. When calling the API, our code waits for a response before grading the next question. On average, Replicate takes 3 - 5 seconds to reply. Depending on the multithreading scheme, running multiple threads or processes may decrease runtime by 80%—95%.
+   1. While grading each question, our code calls the Replicate API and waits for a response before grading the next question. On average, Replicate takes 3 - 5 seconds to reply. Depending on the multithreading scheme, running multiple threads or processes may decrease runtime by 80%—95%.
    2. A more straightforward solution may be to run the code at night or over weekends.
 
 ###### [back to top](#Grade-Assistant-Proof-of-Concept)
